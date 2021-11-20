@@ -45,7 +45,7 @@ public class Formula1ChampionshipManager {
             if (userInput.equals("1")) {
                 System.out.print("\nEntered input is 1!\n");
                 AddDriver(input);
-                resubmit(input);
+                Resubmit(input);
             } else if (userInput.equals("2")) {
                 System.out.print("\nEntered input is 2!\n");
                 DelDriver(input);
