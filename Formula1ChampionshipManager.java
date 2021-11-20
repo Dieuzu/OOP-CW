@@ -41,9 +41,10 @@ public class Formula1ChampionshipManager {
 
             System.out.print("\nEnter your Input : ");
             String userInput = input.nextLine();
+            System.out.print("============================================================");
 
             if (userInput.equals("1")) {
-                System.out.print("\nEntered input is 1!\n");
+                System.out.print("\nStarted Add New Driver Script ✔\n");
                 AddDriver(input);
                 Resubmit(input);
             } else if (userInput.equals("2")) {
@@ -84,15 +85,15 @@ public class Formula1ChampionshipManager {
         String DTeam = "E";
         System.out.print("\nEnter Driver's Name : ");
         String DName = input.nextLine(); 
-        System.out.print("\nEnter Drivers Location : ");
+        System.out.print("Enter Drivers Location : ");
         String DLocation = input.nextLine();
         
         
-        // unique team checker===============
+        // Unique Team Checker
         Boolean TeamCheck = true;
         while(TeamCheck){
             ErrorCount=0;
-            System.out.print("\nEnter Drivers Team : ");
+            System.out.print("Enter Drivers Team : ");
             DTeam = input.nextLine(); 
             for (int i =0; i<15; i++){
                 if (RaceDriver[i].getDriverT().getTeamN().equals(DTeam)){
@@ -100,7 +101,7 @@ public class Formula1ChampionshipManager {
                 }
             }
             if (ErrorCount>0){
-                System.out.print("\nThis team Already has a Driver! Try again...");
+                System.out.print("This team Already has a Driver! Pls try again...\n\n");
             }
             else{
                 TeamCheck = false;
@@ -109,10 +110,10 @@ public class Formula1ChampionshipManager {
 
         Boolean PositionChecker = true;
         while (PositionChecker) { 
-            System.out.print("\nEnter Driver Position in Race [or 0 if not Participated in any Race] : ");
+            System.out.print("Enter Driver Position in Race [or 0 if not Participated in any Race] : ");
             DPos = Integer.parseInt(input.nextLine());
             if (DPos < 0 || DPos > 15){
-                System.out.print("Pls Enter a Valid Position between 1-15");
+                System.out.print("Pls Enter a Valid Position between 1-15\n");
             }else {
                 DriverCount +=1;
                 PositionChecker = false;
@@ -122,20 +123,28 @@ public class Formula1ChampionshipManager {
             if (RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam), new Formula1Driver(DPos));
                 DriverCount += 1;
-                System.out.print("\nAdded Data for Driver : " + RaceDriver[x].getDriverN() 
-                                + " From " + RaceDriver[x].getDriverL() 
-                                + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
-                                + " who came in position " + RaceDriver[x].getDriverS().getRP() 
-                                + " who has a total points of " + RaceDriver[x].getDriverS().getNumPoint()
-                                + ". \nData Stored In Location " + x);        
-                break;
+                if (DPos == 0){
+                    System.out.print("\n✔ Added Data for Driver : " + RaceDriver[x].getDriverN() 
+                    + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
+                    + " From " + RaceDriver[x].getDriverL() 
+                    + "\n                      ↳ No Additional Stats Added For "+ RaceDriver[x].getDriverN()+"!");        
+                    break;
+
+                }else{
+                    System.out.print("\n✔ Added Data for Driver : " + RaceDriver[x].getDriverN() 
+                    + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
+                    + " From " + RaceDriver[x].getDriverL() 
+                    + " who came in position " + RaceDriver[x].getDriverS().getRP() 
+                    + " with a total points of " + RaceDriver[x].getDriverS().getNumPoint());        
+                    break;
+                }
             }
         }
     }
 
     //1.5 Resubmit Add Driver function
     public static void Resubmit(Scanner input){
-        //Recursion time? 
+        //Recursion time YAY
         Boolean Resubmit = true;
         while (Resubmit){
             System.out.print("\n\nDo you want to add another driver? (yes/y/no/n) : ");
@@ -144,55 +153,28 @@ public class Formula1ChampionshipManager {
                 AddDriver(input);
             }else if (AddUI.equals("no") || AddUI.equals("n")){
                 Resubmit = false;
-                System.out.print("\n\nAll Data Of all Drivers");
-                for (int x = 0; x < 15; x++) {
-                    if (!RaceDriver[x].getDriverN().equals("E")) {
-                        System.out.print("\nData of Driver : " + RaceDriver[x].getDriverN()  
-                        + " of Team "+ RaceDriver[x].getDriverT().getTeamN()  
-                        + " stored in location " + x);
-                    }else {
-                        System.out.print("\nNo Data contained in the postion " + x);
-                    }
-                } 
+                ShowAllDriver();
             }else{
                 System.out.print("\nPls Enter a Valid Answer!");
             }
         }
     }
 
-    //2. Delete the Driver 
+    //2. Delete the Driver <<------------------ STOPPED HERE CONTINUE FROM HERE
     public static void DelDriver(Scanner input){
-        System.out.print("\n\nData of all Added Drivers");
-        for (int x = 0; x < 15; x++) {
-            if (!RaceDriver[x].getDriverN().equals("E")) {
-                System.out.print("\nData location "+ x+" : Contains Data of " + RaceDriver[x].getDriverN()  
-                + " of Team "+ RaceDriver[x].getDriverT().getTeamN());
-            }// write a code for filled up list
-        }
+        ShowAllDriver();
 
         Boolean DelCheck = true;
         while (DelCheck){
-            System.out.print("\nEnter the Data location number of the Driver that you wish to remove : ");
+            System.out.print("\nEnter the S.No of the Driver that you wish to remove : ");
             int DDNo = Integer.parseInt(input.nextLine()); // DDNo = Delete Driver Number
             if (DDNo >= RaceDriver.length) {
-                System.out.print("\nThe entered Index is Out of Range!: \n");
+                System.out.print("\nThe entered S.No is Out of Range!: \n");
                 continue;
             } else {
-                System.out.print("\nDriver " + RaceDriver[DDNo].getDriverN()+ " of Team " + RaceDriver[DDNo].getDriverT().getTeamN() + " Has been Removed From Data location number " + DDNo + "\n");
+                System.out.print("\nDriver " + RaceDriver[DDNo].getDriverN()+ " of Team " + RaceDriver[DDNo].getDriverT().getTeamN() + " Has been Removed From Formula 1 Roster ✔\n");
                 RaceDriver[DDNo] = new Driver("E", "E", new Team("E"), new Formula1Driver(0));
-                // "do u want to delete another driver "code here if have time
-
-                //=========================================
-                System.out.print("\n\nAll Data Of all Drivers");
-                for (int x = 0; x < 15; x++) {
-                    if (!RaceDriver[x].getDriverN().equals("E")) {
-                        System.out.print("\nData of Driver : " + RaceDriver[x].getDriverN()  
-                        + " of Team "+ RaceDriver[x].getDriverT().getTeamN()  
-                        + " stored in location " + x);
-                    }else {
-                        System.out.print("\nNo Data contained in the postion " + x);
-                    }
-                } 
+                //ShowAllDriver(); // COMMENT ME OUT AFTER ALL TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 DelCheck = false;
             }
         }
@@ -324,7 +306,7 @@ public class Formula1ChampionshipManager {
                 System.out.printf(TableFormat, x, RaceDriver[x].getDriverN(), RaceDriver[x].getDriverT().getTeamN());
             }
         } 
-        System.out.print("\n+------+--------------------+------------------+");
+        System.out.print("\n+------+--------------------+------------------+\n");
     }
 
     //Check Select Driver Stats!
