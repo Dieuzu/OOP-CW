@@ -91,9 +91,12 @@ public class Formula1Driver {
         }else if (racePosition == 10){
             numPoints += 1;
             numRaces += 1;
-        }else{
+        }else if (racePosition == 0){
             numPoints += 0;
             numRaces += 0;
+        }else{
+            numPoints += 0;
+            numRaces += 1;
         }
 
     }
