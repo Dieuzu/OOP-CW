@@ -3,7 +3,6 @@ public class Formula1Driver {
     private int numFirstPos = 0;
     private int numSecondPos = 0;
     private int numThirdPos = 0;
-
     private int racePosition = 0;
     private int numPoints = 0;
     private int numRaces = 0;
@@ -12,23 +11,18 @@ public class Formula1Driver {
     public int getRP() {
         return racePosition;
     }
-
     public int getFP() {
         return numFirstPos;
     }
-
     public int getSP() {
         return numSecondPos;
     }
-
     public int getTP() {
         return numThirdPos;
     }
-
     public int getNumPoint() {
         return numPoints;
     }
-
     public int getNumRaces() {
         return numRaces;
     }
@@ -46,11 +40,9 @@ public class Formula1Driver {
     public void setTP(int z) {
         numThirdPos += z;
     }
-
     public void setNumPoint(int p) {
         numPoints += p;
     }
-
     public void setNumRaces(int r) {
         numRaces += r;
     }
