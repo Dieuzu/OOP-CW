@@ -163,7 +163,7 @@ public class Formula1ChampionshipManager {
         }
     }
 
-    //2. Delete the Driver <<------------------ STOPPED HERE CONTINUE FROM HERE
+    //2. Delete the Driver 
     public static void DelDriver(Scanner input){
         if (DriverCount==0){
             System.out.print("Sorry the System doesnt have any Drivers to Delete!\n");
@@ -271,23 +271,35 @@ public class Formula1ChampionshipManager {
             }
         }
 
+        for (int x = 0; x < 9; x++) {              //Bubble sort technique
+            for (int y = 0; y < 14 - x; y++) {
+                if (CloneRaceDriver[y].getDriverS().getNumPoint() == CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
+                    if (CloneRaceDriver[y].getDriverS().getFP() < CloneRaceDriver[y + 1].getDriverS().getFP()) {
+                        Driver Holder = CloneRaceDriver[y];
+                        CloneRaceDriver[y] = CloneRaceDriver[y + 1];
+                        CloneRaceDriver[y + 1] = Holder;
+                    }
+                }
+            }
+        }
+
         // printing part
-        String TableFormat = "\n| %-4d | %-18s | %-16s | %-17d | %-14d |";
-        System.out.print("\n=============================== Formula 1 Driver Table ==============================");
-        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+");
-        System.out.print("\n| Rank |    Driver Name     |       Team       |  Number of Races  |  Total Points  |");
-        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+");
+        String TableFormat = "\n| %-4d | %-18s | %-16s | %-17d | %-14d | %-21d |";
+        System.out.print("\n========================================== Formula 1 Driver Table ===========================================");
+        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+-----------------------+");
+        System.out.print("\n| Rank |    Driver Name     |       Team       |  Number of Races  |  Total Points  | No. of 1st Place Wins |");
+        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+-----------------------+");
         //some code Driver
         for (int x = 0; x < 15; x++) {
             if (!CloneRaceDriver[x].getDriverN().equals("E")) {
-                System.out.printf(TableFormat, x+1, CloneRaceDriver[x].getDriverN(), CloneRaceDriver[x].getDriverT().getTeamN(), CloneRaceDriver[x].getDriverS().getNumRaces(), CloneRaceDriver[x].getDriverS().getNumPoint());
+                System.out.printf(TableFormat, x+1, CloneRaceDriver[x].getDriverN(), CloneRaceDriver[x].getDriverT().getTeamN(), CloneRaceDriver[x].getDriverS().getNumRaces(), CloneRaceDriver[x].getDriverS().getNumPoint(), CloneRaceDriver[x].getDriverS().getFP());
             }
         }
         //System.out.print("\n|                    |                  |                   |                |"); // Test code
-        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+");
+        System.out.print("\n+------+--------------------+------------------+-------------------+----------------+-----------------------+");
     }
     
-    //6.Add a Race Function NOT COMPLETED
+    //6.Add a Race Function 
     public static void AddRace(Scanner input){
             int raceParticipant = 0;
             System.out.print("\nEnter Race Name : ");
@@ -312,8 +324,8 @@ public class Formula1ChampionshipManager {
                         RaceDriver[SNo].getDriverS().setRP(NPos);
 
                         raceParticipant ++;
-                        System.out.print("Updated "+ RaceDriver[SNo].getDriverN() + " Stats in the Race " + RaceName + "!");
-                        System.out.print(RaceDriver[SNo].getDriverN() + " now has a total of " + RaceDriver[SNo].getDriverS().getNumPoint() + "!");
+                        System.out.print("Updated "+ RaceDriver[SNo].getDriverN() + " Stats in the Race " + RaceName + "! ");
+                        System.out.print(RaceDriver[SNo].getDriverN() + " now has a total of " + RaceDriver[SNo].getDriverS().getNumPoint() + "!"); // NUKE THIS LINE IN THE END
                     }
                 }else if (AddUI.equals("no") || AddUI.equals("n")){
                     RaceDriverStatU = false;
@@ -428,8 +440,6 @@ public class Formula1ChampionshipManager {
         System.out.println("================================================");
 
     }
-
-
 
     //X. Load Data 
     public static void LoadPrgrmData() {
