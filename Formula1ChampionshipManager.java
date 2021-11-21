@@ -84,6 +84,10 @@ public class Formula1ChampionshipManager {
 
     //1. Add Driver Function
     public static void AddDriver(Scanner input) {
+        if (DriverCount==15){
+            System.out.print("Sorry the F1 Championship Roster is Full and No new Drivers Can be Added!\n");
+            return;
+        }
         int DPos = 0;
         int ErrorCount = 0;
         String DTeam = "E";
@@ -260,10 +264,9 @@ public class Formula1ChampionshipManager {
             CloneRaceDriver[x] = RaceDriver[x];
         }
 
-        for (int x = 0; x < 9; x++) {              //Bubble sort technique
+        for (int x = 0; x < 14; x++) {              //Bubble sort technique
             for (int y = 0; y < 14 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() < CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
-
                     Driver Holder = CloneRaceDriver[y];
                     CloneRaceDriver[y] = CloneRaceDriver[y + 1];
                     CloneRaceDriver[y + 1] = Holder;
@@ -271,7 +274,7 @@ public class Formula1ChampionshipManager {
             }
         }
 
-        for (int x = 0; x < 9; x++) {              //Bubble sort technique
+        for (int x = 0; x < 14; x++) {              //Bubble sort technique
             for (int y = 0; y < 14 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() == CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
                     if (CloneRaceDriver[y].getDriverS().getFP() < CloneRaceDriver[y + 1].getDriverS().getFP()) {
@@ -295,7 +298,6 @@ public class Formula1ChampionshipManager {
                 System.out.printf(TableFormat, x+1, CloneRaceDriver[x].getDriverN(), CloneRaceDriver[x].getDriverT().getTeamN(), CloneRaceDriver[x].getDriverS().getNumRaces(), CloneRaceDriver[x].getDriverS().getNumPoint(), CloneRaceDriver[x].getDriverS().getFP());
             }
         }
-        //System.out.print("\n|                    |                  |                   |                |"); // Test code
         System.out.print("\n+------+--------------------+------------------+-------------------+----------------+-----------------------+");
     }
     
@@ -438,7 +440,6 @@ public class Formula1ChampionshipManager {
         System.out.println("No. of 2nd Place Wins   : "+RaceDriver[x].getDriverS().getSP());
         System.out.println("No. of 3rd Place Wins   : "+RaceDriver[x].getDriverS().getTP());
         System.out.println("================================================");
-
     }
 
     //X. Load Data 
@@ -462,8 +463,8 @@ public class Formula1ChampionshipManager {
                 int SPnum = Integer.parseInt(Loader.nextLine()); 
                 int TPnum = Integer.parseInt(Loader.nextLine()); 
 
-                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam));
-                RaceDriver[x].setDriverS(new Formula1Driver(Rnum, Pnum, FPnum, SPnum, TPnum));
+                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam)); // this running an exclusive overloaded constructor
+                RaceDriver[x].setDriverS(new Formula1Driver(Rnum, Pnum, FPnum, SPnum, TPnum)); // this running an exclusive overloaded constructor
                 DiverSaveCheck = true;
             }
         } catch (IOException e) {
