@@ -46,6 +46,12 @@ public class Driver {
         driverStats = Stats;
     } 
 
+    public Driver(String Name, String Location, Team Team){
+        driverName = Name ;
+        driverLocation= Location ;
+        driverTeam= Team ;
+    } 
+
     public Driver(Formula1Driver Stats){ // overloading
         driverStats = Stats;
     } 

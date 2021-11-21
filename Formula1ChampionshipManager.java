@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.io.BufferedWriter;
-//import java.io.FileInputStream;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 //import java.util.LinkedList;
@@ -12,6 +12,7 @@ public class Formula1ChampionshipManager {
     public static int DriverCount = 0;
     public static int RacesCount =0;
 
+
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
 
         for (int x = 0; x < 15; x++) //initializing the Driver type array with all data set to empty
@@ -19,7 +20,8 @@ public class Formula1ChampionshipManager {
         for (int y = 0; y < 10; y++) //initializing the races type array with all data set to empty
             RaceF1[y] = new Races("NA", "NA");
 
-        PrintMenu(args);
+        LoadPrgrmData(); // Loads all save data on Start!
+        PrintMenu(args); // loads the menu for User
     }
 
     //0.  Print Menu method
@@ -64,13 +66,14 @@ public class Formula1ChampionshipManager {
                 System.out.print("\nStarted Add F1 Race Script ✔\n");
                 AddRace(input);
             } else if (userInput.equals("7")) {
-                //System.out.print("\nEntered input is 7!\n");
+                System.out.print("\nStarted F1 Championship Manager Save Data Script ✔\n");
                 SaveData();
             } else if (userInput.equals("8")) {
-                System.out.print("\nEntered input is 8!\n");
+                System.out.print("\nStarted GUI Script ✔\n");
                 //function()
                 GUI.main(args);
             } else if (userInput.equals("0")) {
+                SaveData();
                 System.out.print("\nThank you For Trying the Application!\n");
                 MenuCheck = false;
             } else {
@@ -286,12 +289,10 @@ public class Formula1ChampionshipManager {
     
     //6.Add a Race Function NOT COMPLETED
     public static void AddRace(Scanner input){
-        // Boolean RaceChecker = true;
-        // while (RaceChecker) {
             int raceParticipant = 0;
             System.out.print("\nEnter Race Name : ");
             String RaceName = input.nextLine(); 
-            System.out.print("\nEnter Race Date : ");
+            System.out.print("Enter Race Date : ");
             String RaceDate = input.nextLine(); 
 
             boolean RaceDriverStatU = true;
@@ -300,24 +301,20 @@ public class Formula1ChampionshipManager {
                 String AddUI = input.nextLine(); 
                 if (AddUI.equals("yes") || AddUI.equals("y")){
                     ShowAllDriver();
-                    System.out.print("\nEnter the S.No of the Driver whose stats you wish to update: ");
+                    System.out.print("Enter the S.No of the Driver whose stats you wish to update: ");
                     int SNo = Integer.parseInt(input.nextLine()); 
                     if (SNo >= RaceDriver.length) {
-                        System.out.print("\nThe entered S.No is Out of Range!: \n");
+                        System.out.print("The entered S.No is Out of Range!: \n");
                         continue;
                     } else {
                         System.out.print("\nWhat Position did "+ RaceDriver[SNo].getDriverN() + " Finish the Race in ? : ");
                         int NPos = Integer.parseInt(input.nextLine());
-                        //RaceDriver[SNo].setDriverS(new Formula1Driver(NPos));
-
-                        // Experimental mode
                         RaceDriver[SNo].getDriverS().setRP(NPos);
 
                         raceParticipant ++;
                         System.out.print("Updated "+ RaceDriver[SNo].getDriverN() + " Stats in the Race " + RaceName + "!");
                         System.out.print(RaceDriver[SNo].getDriverN() + " now has a total of " + RaceDriver[SNo].getDriverS().getNumPoint() + "!");
                     }
-
                 }else if (AddUI.equals("no") || AddUI.equals("n")){
                     RaceDriverStatU = false;
                 }else{
@@ -348,14 +345,51 @@ public class Formula1ChampionshipManager {
                     break;
                 }
             }
-
-
-        // }
-
-
     }
 
+    //7.  Save Data
+    public static void SaveData(){
+        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Drivers.txt"))) { // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
+            bkp.write(String.valueOf(DriverCount));  // Stores number of drivers in first line
+            bkp.newLine();
+            for (int x = 0; x < 15; x++) {        // Stores all driver details line by line
+                bkp.write(RaceDriver[x].getDriverN());
+                bkp.newLine();
+                bkp.write(RaceDriver[x].getDriverT().getTeamN());
+                bkp.newLine();
+                bkp.write(RaceDriver[x].getDriverL());
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumRaces()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumPoint()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getFP()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getSP()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getTP()));
+                bkp.newLine();
+            }
+            System.out.print("\nSucessfully Saved all F1 Registerd Driver data to Drivers.txt!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Races.txt"))) {
+            bkp.write(String.valueOf(RacesCount));  // Stores number of Races in first line
+            bkp.newLine();
+            for (int x = 0; x < 10; x++) {        // Stores all Race details line by line
+                bkp.write(RaceF1[x].getMapN());
+                bkp.newLine();
+                bkp.write(RaceF1[x].getRaceD());
+                bkp.newLine();
+
+            }
+            System.out.print("\nSucessfully Saved all F1 Race data to Races.txt!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //======================================================= EXTRA FUNCTIONS FOR SIMPLICITY =======================================================
 
@@ -395,46 +429,61 @@ public class Formula1ChampionshipManager {
 
     }
 
-    //7.  Save Data
-    public static void SaveData(){
-        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Drivers.txt"))) { // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
-            bkp.write(String.valueOf(DriverCount));  // Stores number of drivers in first line
-            bkp.newLine();
-            for (int x = 0; x < 15; x++) {        // Stores all driver details line by line
-                bkp.write(RaceDriver[x].getDriverN());
-                bkp.newLine();
-                bkp.write(RaceDriver[x].getDriverT().getTeamN());
-                bkp.newLine();
-                bkp.write(RaceDriver[x].getDriverL());
-                bkp.newLine();
-                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumRaces()));
-                bkp.newLine();
-                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumPoint()));
-                bkp.newLine();
-                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getFP()));
-                bkp.newLine();
-                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getSP()));
-                bkp.newLine();
-                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getTP()));
-                bkp.newLine();
+
+
+    //X. Load Data 
+    public static void LoadPrgrmData() {
+        boolean DiverSaveCheck = false;
+        boolean RaceSaveCheck = false;
+
+        try {
+            Scanner Loader = new Scanner(new FileInputStream("Drivers.txt"));  // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
+            DriverCount = Integer.parseInt(Loader.nextLine());
+            for (int x = 0; x < 15; x++) {
+                
+                String DName =Loader.nextLine(); 
+                String DTeam = Loader.nextLine(); 
+                String DLocation = Loader.nextLine(); 
+
+                int Rnum = Integer.parseInt(Loader.nextLine()); 
+                int Pnum = Integer.parseInt(Loader.nextLine());
+
+                int FPnum = Integer.parseInt(Loader.nextLine());  
+                int SPnum = Integer.parseInt(Loader.nextLine()); 
+                int TPnum = Integer.parseInt(Loader.nextLine()); 
+
+                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam));
+                RaceDriver[x].setDriverS(new Formula1Driver(Rnum, Pnum, FPnum, SPnum, TPnum));
+                DiverSaveCheck = true;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Races.txt"))) {
-            bkp.write(String.valueOf(RacesCount));  // Stores number of Races in first line
-            bkp.newLine();
-            for (int x = 0; x < 10; x++) {        // Stores all Race details line by line
-                bkp.write(RaceF1[x].getMapN());
-                bkp.newLine();
-                bkp.write(RaceF1[x].getRaceD());
-                bkp.newLine();
+        try {
+            Scanner Loader = new Scanner(new FileInputStream("Races.txt"));
+            RacesCount = Integer.parseInt(Loader.nextLine());
+            for (int x = 0; x < 10; x++) {
+                
+                String RMName = Loader.nextLine(); 
+                String RMDate = Loader.nextLine(); 
 
+                RaceF1[x] = new Races(RMName, RMDate);
+                RaceSaveCheck = true;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print("\nSucessfully Saved all F1 Registerd Driver data to Drivers.txt!");
+
+        if (DiverSaveCheck && RaceSaveCheck) {
+            System.out.print("\nSucessfully Restored Driver Data And Race Data from Last Session!\n");
+        }else if (DiverSaveCheck && !RaceSaveCheck){
+            System.out.print("\nSucessfully Restored Driver Data from Last Session!\n");
+        }else if (!DiverSaveCheck && RaceSaveCheck){
+            System.out.print("\nSucessfully Restored Race Data from Last Session!\n");
+        }else{
+            System.out.print("\nWelcome to Formula 1 Championship Manager!\n");
+        }
     }
+
 }

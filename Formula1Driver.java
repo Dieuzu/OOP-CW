@@ -88,6 +88,14 @@ public class Formula1Driver {
     }
     
     // constructors
+    public Formula1Driver(int NR, int NP, int NFP, int NSP, int NTP){
+        numRaces = NR;
+        numPoints = NP;
+        numFirstPos = NFP;
+        numSecondPos = NSP;
+        numThirdPos = NTP;
+    }
+
     public Formula1Driver(int position){ // 1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
         racePosition = position;
         if (racePosition == 1){
