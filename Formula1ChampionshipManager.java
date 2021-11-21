@@ -1,8 +1,8 @@
 import java.util.Scanner;
-//import java.io.BufferedWriter;
+import java.io.BufferedWriter;
 //import java.io.FileInputStream;
-//import java.io.FileWriter;
-//import java.io.IOException;
+import java.io.FileWriter;
+import java.io.IOException;
 //import java.util.LinkedList;
 
 public class Formula1ChampionshipManager {
@@ -10,6 +10,7 @@ public class Formula1ChampionshipManager {
     public static Driver[] RaceDriver = new Driver[15]; 
     public static Races[] RaceF1 = new Races[10];
     public static int DriverCount = 0;
+    public static int RacesCount =0;
 
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
 
@@ -48,23 +49,23 @@ public class Formula1ChampionshipManager {
                 AddDriver(input);
                 Resubmit(input);
             } else if (userInput.equals("2")) {
-                System.out.print("\nEntered input is 2!\n");
+                System.out.print("\nStarted Delete Driver Script ✔\n");
                 DelDriver(input);
             } else if (userInput.equals("3")) {
-                System.out.print("\nEntered input is 3!\n");
+                System.out.print("\nStarted Change Driver Team Script ✔\n");
                 ChangeTeamDriver(input);
             } else if (userInput.equals("4")) {
-                System.out.print("\nEntered input is 4!\n");
+                System.out.print("\nStarted Driver Stat Checker Script ✔\n");
                 CheckDriverStats(input);
             } else if (userInput.equals("5")) {
-                System.out.print("\nEntered input is 5!\n");
+                System.out.print("\nStarted F1 Driver Leaderboard Script ✔\n");
                 DisplayDRVRStats(input); // working on this first cause why not
             } else if (userInput.equals("6")) {
-                System.out.print("\nEntered input is 6!\n");
-                //function()
+                System.out.print("\nStarted Add F1 Race Script ✔\n");
+                AddRace(input);
             } else if (userInput.equals("7")) {
-                System.out.print("\nEntered input is 7!\n");
-                //function()
+                //System.out.print("\nEntered input is 7!\n");
+                SaveData();
             } else if (userInput.equals("8")) {
                 System.out.print("\nEntered input is 8!\n");
                 //function()
@@ -115,7 +116,6 @@ public class Formula1ChampionshipManager {
             if (DPos < 0 || DPos > 15){
                 System.out.print("Pls Enter a Valid Position between 1-15\n");
             }else {
-                DriverCount +=1;
                 PositionChecker = false;
             }
         }   
@@ -127,7 +127,7 @@ public class Formula1ChampionshipManager {
                     System.out.print("\n✔ Added Data for Driver : " + RaceDriver[x].getDriverN() 
                     + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
                     + " From " + RaceDriver[x].getDriverL() 
-                    + "\n                      ↳ No Additional Stats Added For "+ RaceDriver[x].getDriverN()+"!");        
+                    + "\n                       ↳ No Additional Stats Added For "+ RaceDriver[x].getDriverN()+"!");        
                     break;
 
                 }else{
@@ -162,6 +162,10 @@ public class Formula1ChampionshipManager {
 
     //2. Delete the Driver <<------------------ STOPPED HERE CONTINUE FROM HERE
     public static void DelDriver(Scanner input){
+        if (DriverCount==0){
+            System.out.print("Sorry the System doesnt have any Drivers to Delete!\n");
+            return;
+        }
         ShowAllDriver();
 
         Boolean DelCheck = true;
@@ -175,6 +179,7 @@ public class Formula1ChampionshipManager {
                 System.out.print("\nDriver " + RaceDriver[DDNo].getDriverN()+ " of Team " + RaceDriver[DDNo].getDriverT().getTeamN() + " Has been Removed From Formula 1 Roster ✔\n");
                 RaceDriver[DDNo] = new Driver("E", "E", new Team("E"), new Formula1Driver(0));
                 //ShowAllDriver(); // COMMENT ME OUT AFTER ALL TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                DriverCount --;
                 DelCheck = false;
             }
         }
@@ -182,6 +187,10 @@ public class Formula1ChampionshipManager {
     
     //3. CHANGE DRIVER FOR TEAM FUNCTIONS
     public static void ChangeTeamDriver(Scanner input){
+        if (DriverCount==0){
+            System.out.print("Sorry the System doesnt have any Registerd Teams!\n");
+            return;
+        }
         System.out.print("\nCurrently Participating Teams : ");
         for (int i =0; i<15; i++){
             if (!RaceDriver[i].getDriverN().equals("E")){
@@ -277,24 +286,82 @@ public class Formula1ChampionshipManager {
     
     //6.Add a Race Function NOT COMPLETED
     public static void AddRace(Scanner input){
-        //String RaceName = "E";
-        String RaceName = "";
-        Boolean RaceChecker = true;
-
-        while (RaceChecker) {
+        // Boolean RaceChecker = true;
+        // while (RaceChecker) {
+            int raceParticipant = 0;
             System.out.print("\nEnter Race Name : ");
-            RaceName = input.nextLine(); 
-        }
+            String RaceName = input.nextLine(); 
+            System.out.print("\nEnter Race Date : ");
+            String RaceDate = input.nextLine(); 
 
-        System.out.print("\nEnter Race Date : ");
-        String RaceDate = input.nextLine(); 
+            boolean RaceDriverStatU = true;
+            while (RaceDriverStatU) {
+                System.out.print("\nDo you wish to Update stats of existing driver who took part in this Race ?(yes/y/no/n) : ");
+                String AddUI = input.nextLine(); 
+                if (AddUI.equals("yes") || AddUI.equals("y")){
+                    ShowAllDriver();
+                    System.out.print("\nEnter the S.No of the Driver whose stats you wish to update: ");
+                    int SNo = Integer.parseInt(input.nextLine()); 
+                    if (SNo >= RaceDriver.length) {
+                        System.out.print("\nThe entered S.No is Out of Range!: \n");
+                        continue;
+                    } else {
+                        System.out.print("\nWhat Position did "+ RaceDriver[SNo].getDriverN() + " Finish the Race in ? : ");
+                        int NPos = Integer.parseInt(input.nextLine());
+                        //RaceDriver[SNo].setDriverS(new Formula1Driver(NPos));
+
+                        // Experimental mode
+                        RaceDriver[SNo].getDriverS().setRP(NPos);
+
+                        raceParticipant ++;
+                        System.out.print("Updated "+ RaceDriver[SNo].getDriverN() + " Stats in the Race " + RaceName + "!");
+                        System.out.print(RaceDriver[SNo].getDriverN() + " now has a total of " + RaceDriver[SNo].getDriverS().getNumPoint() + "!");
+                    }
+
+                }else if (AddUI.equals("no") || AddUI.equals("n")){
+                    RaceDriverStatU = false;
+                }else{
+                    System.out.print("\nPls Enter a Valid Answer!");
+                }
+            }
+
+            boolean RaceNEWDriverAdd = true;
+            while (RaceNEWDriverAdd){
+                System.out.print("\nDo you wish to Add a NEW Driver to this Race ?(yes/y/no/n) : ");
+                String AddUI = input.nextLine(); 
+                if (AddUI.equals("yes") || AddUI.equals("y")){
+                    AddDriver(input);
+                    raceParticipant ++;
+                }else if (AddUI.equals("no") || AddUI.equals("n")){
+                    RaceNEWDriverAdd = false;
+                }else{
+                    System.out.print("\nPls Enter a Valid Answer!");
+                }
+            }
+            
+            for (int x = 0; x < 10; x++) {
+                if (RaceF1[x].getMapN().equals("NA")) {
+                    RaceF1[x] = new Races(RaceName, RaceDate);
+                    RacesCount += 1;
+                    System.out.print("\n✔ Added Data for New Race : " + RaceF1[x].getMapN()
+                    + " That took Place on " + RaceF1[x].getRaceD() + " With " + raceParticipant + " dirvers!");
+                    break;
+                }
+            }
+
+
+        // }
+
 
     }
+
+
 
     //======================================================= EXTRA FUNCTIONS FOR SIMPLICITY =======================================================
 
     //Check all Driver Functions!
     public static void ShowAllDriver() {
+        DriverCount=0;
         String TableFormat = "\n| %-4d | %-18s | %-16s |";
         System.out.print("\nDisplaying all Registerd F1 Drivers : \n");
         System.out.print("\n+------+--------------------+------------------+");
@@ -304,6 +371,8 @@ public class Formula1ChampionshipManager {
         for (int x = 0; x < 15; x++) {
             if (!RaceDriver[x].getDriverN().equals("E")) {
                 System.out.printf(TableFormat, x, RaceDriver[x].getDriverN(), RaceDriver[x].getDriverT().getTeamN());
+                //backup Counter Fixer
+                DriverCount ++;
             }
         } 
         System.out.print("\n+------+--------------------+------------------+\n");
@@ -326,4 +395,46 @@ public class Formula1ChampionshipManager {
 
     }
 
+    //7.  Save Data
+    public static void SaveData(){
+        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Drivers.txt"))) { // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
+            bkp.write(String.valueOf(DriverCount));  // Stores number of drivers in first line
+            bkp.newLine();
+            for (int x = 0; x < 15; x++) {        // Stores all driver details line by line
+                bkp.write(RaceDriver[x].getDriverN());
+                bkp.newLine();
+                bkp.write(RaceDriver[x].getDriverT().getTeamN());
+                bkp.newLine();
+                bkp.write(RaceDriver[x].getDriverL());
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumRaces()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getNumPoint()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getFP()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getSP()));
+                bkp.newLine();
+                bkp.write(String.valueOf(RaceDriver[x].getDriverS().getTP()));
+                bkp.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Races.txt"))) {
+            bkp.write(String.valueOf(RacesCount));  // Stores number of Races in first line
+            bkp.newLine();
+            for (int x = 0; x < 10; x++) {        // Stores all Race details line by line
+                bkp.write(RaceF1[x].getMapN());
+                bkp.newLine();
+                bkp.write(RaceF1[x].getRaceD());
+                bkp.newLine();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.print("\nSucessfully Saved all F1 Registerd Driver data to Drivers.txt!");
+    }
 }

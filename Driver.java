@@ -45,4 +45,8 @@ public class Driver {
         driverTeam= Team ;
         driverStats = Stats;
     } 
+
+    public Driver(Formula1Driver Stats){ // overloading
+        driverStats = Stats;
+    } 
 }

@@ -7,7 +7,7 @@ public class Races {
         return MapName;
     }
 
-    public String RaceD() {
+    public String getRaceD() {
         return RDate;
     }
 

@@ -30,6 +30,46 @@ public class Formula1Driver {
     //setters
     public void setRP(int s) {
         racePosition = s;
+        if (racePosition == 1){
+            numFirstPos +=1;
+            numPoints += 25;
+            numRaces += 1;
+        }else if (racePosition == 2){
+            numSecondPos += 1;
+            numPoints += 18;
+            numRaces += 1;
+        }else if (racePosition == 3){
+            numThirdPos +=1;
+            numPoints += 15;
+            numRaces += 1;
+        }else if (racePosition == 4){
+            numPoints += 12;
+            numRaces += 1;
+        }else if (racePosition == 5){
+            numPoints += 10;
+            numRaces += 1;
+        }else if (racePosition == 6){
+            numPoints += 8;
+            numRaces += 1;
+        }else if (racePosition == 7){
+            numPoints += 6;
+            numRaces += 1;
+        }else if (racePosition == 8){
+            numPoints += 4;
+            numRaces += 1;
+        }else if (racePosition == 9){
+            numPoints += 2;
+            numRaces += 1;
+        }else if (racePosition == 10){
+            numPoints += 1;
+            numRaces += 1;
+        }else if (racePosition == 0){
+            numPoints += 0;
+            numRaces += 0;
+        }else{
+            numPoints += 0;
+            numRaces += 1;
+        }
     }
     public void setFP(int x) {
         numFirstPos += x;
