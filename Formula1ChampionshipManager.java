@@ -5,12 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 //import java.util.LinkedList;
 
-public class Formula1ChampionshipManager {
+public class Formula1ChampionshipManager{
 
     public static Driver[] RaceDriver = new Driver[15]; 
     public static Races[] RaceF1 = new Races[10];
     public static int DriverCount = 0;
     public static int RacesCount =0;
+
+    public static String DriverData2D[][] = new String[15][8]; // [row] [column]
 
 
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
@@ -71,7 +73,8 @@ public class Formula1ChampionshipManager {
             } else if (userInput.equals("8")) {
                 System.out.print("\nStarted GUI Script ✔\n");
                 //function()
-                GUI.main(args);
+                TwoDArrayDriverData();
+                ChampionshipManager.main(args);
             } else if (userInput.equals("0")) {
                 SaveData();
                 System.out.print("\nThank you For Trying the Application!\n");
@@ -104,7 +107,7 @@ public class Formula1ChampionshipManager {
             System.out.print("Enter Drivers Team : ");
             DTeam = input.nextLine(); 
             for (int i =0; i<15; i++){
-                if (RaceDriver[i].getDriverT().getTeamN().equals(DTeam)){
+                if (RaceDriver[i].getDriverT().getTeamN().toLowerCase().equals(DTeam.toLowerCase())){
                     ErrorCount ++;
                 }
             }
@@ -497,4 +500,26 @@ public class Formula1ChampionshipManager {
         }
     }
 
+    //experimental table drawer
+    public static void TwoDArrayDriverData() {
+        for (int x = 0; x < 15; x++) {  // Stores all driver details line by line
+            String Name = RaceDriver[x].getDriverN();
+            String Team = RaceDriver[x].getDriverT().getTeamN();
+            String Location = RaceDriver[x].getDriverL();
+            String NoRace = String.valueOf(RaceDriver[x].getDriverS().getNumRaces());
+            String NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+            String NoFP = String.valueOf(RaceDriver[x].getDriverS().getFP());
+            String NoSP = String.valueOf(RaceDriver[x].getDriverS().getSP());
+            String NoTP = String.valueOf(RaceDriver[x].getDriverS().getTP());
+
+            DriverData2D[x][0] = Name;
+            DriverData2D[x][1] = Team;
+            DriverData2D[x][2] = Location;
+            DriverData2D[x][3] = NoRace;
+            DriverData2D[x][4] = NoPoints;
+            DriverData2D[x][5] = NoFP;
+            DriverData2D[x][6] = NoSP;
+            DriverData2D[x][7] = NoTP;
+        }
+    }
 }
