@@ -3,6 +3,8 @@ public class Driver {
     private String driverLocation;
     private Team driverTeam;
     private Formula1Driver driverStats;
+ 
+    //make a 2d array holding data of all races and dates and positions
 
     //Getters 
     public String getDriverN() {
