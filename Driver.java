@@ -8,7 +8,7 @@ public class Driver {
     //make an array holding data of all races and dates and positions
     private DRData DriverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumDrivers];
 
-    public DRData getDRD(int x) {
+    public DRData getDRD(int x) { // getter
             return DriverRaceData[x];
     }
 

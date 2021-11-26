@@ -300,7 +300,7 @@ public class Formula1ChampionshipManager{
         }
     }
 
-    //5. Display table of drivers ! THIS IS NOT COMPLETE
+    //5. Display table of drivers ! 
     public static void DisplayDRVRStats(Scanner input){
         Driver[] CloneRaceDriver = new Driver[MaxNumDrivers]; // cloning Driver array as a backup to ensure no sorted change is permanant
         for (int x = 0; x < MaxNumDrivers; x++) {

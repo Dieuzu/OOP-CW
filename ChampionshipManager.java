@@ -24,7 +24,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
         //old code 
         String column[]={"NAME","TEAM", "LOCATION", "No. of RACES", "No. of POINTS", "No. of 1st","No. of 2nd","No. of 3rd"};
         String columnR[]={"RACE NAME","RACE DATE"};
-        String TempRData[][]={{"MONKEY","03/12/19"},{"MONKEY","08/06/92"},{"MONKEY","06/02/92"},{"MONKEY","15/02/04"},{"MONKEY","25/11/21"},{"MONKEY","15/04/90"},};
+        //String TempRData[][]={{"MONKEY","03/12/19"},{"MONKEY","08/06/92"},{"MONKEY","06/02/92"},{"MONKEY","15/02/04"},{"MONKEY","25/11/21"},{"MONKEY","15/04/90"},};
 
         JTable RaceTable=new JTable(GRData,columnR);  
         //JTable RaceTable=new JTable(GDData,column);   
@@ -141,7 +141,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                             Random racePosition = new Random();
                             boolean Race = true;
                             while (Race) {
-                                
+
                                 int random = racePosition.nextInt(DriverCount+1);
                                 if (!numbers.contains(random) && random !=0) {
                                     numbers.add(random);
