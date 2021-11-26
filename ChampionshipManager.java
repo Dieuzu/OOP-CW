@@ -11,7 +11,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     
     String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
-    public int Racenum = 1;
+    //public int Racenum = 1;
     public String driverNameR = "Driver";
 
     // Create the main panel
@@ -38,7 +38,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         JButton randRace1button = new JButton("Generate a Random Race");
         JButton randRace2button = new JButton("Generate a Random Race with %");
         JButton lookUpbutton = new JButton("Lookup All races of Driver");
-        JButton clearbutton = new JButton("Clear Console");
+        JButton clearbutton = new JButton("Clear GUI Console");
 
         //Text Field that doubles as inpput section + consol log
         JTextField TextFieldConsole = new JTextField();  
@@ -213,13 +213,15 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                         TextFieldConsole.setText(driverNameR + " Is a Regiserd Driver in this Season of F1 Championship!");
                         //step 2 get the stats and start concatenation
                         for(int j = 0; j < MaxNumRaces; j++){
-                            String RN = RaceDriver[i].getDRD(j).getRaceName();
-                            String RT = RaceDriver[i].getDRD(j).getRaceDate();
-                            String RP = String.valueOf(RaceDriver[i].getDRD(j).getRacepostion());
-
-                            //Concatdata = RN +" ("+ RT +")\nPosition : " + RP + "\n\n";
-                            //RaceStats = RaceStats.concat(Concatdata);
-                            RaceStats = RaceStats.concat(RN +" ("+ RT +")\nPosition : " + RP + "\n\n");
+                            if (!RaceDriver[i].getDRD(j).getRaceName().equals("NA")){
+                                String RN = RaceDriver[i].getDRD(j).getRaceName();
+                                String RT = RaceDriver[i].getDRD(j).getRaceDate();
+                                String RP = String.valueOf(RaceDriver[i].getDRD(j).getRacepostion());
+    
+                                //Concatdata = RN +" ("+ RT +")\nPosition : " + RP + "\n\n";
+                                //RaceStats = RaceStats.concat(Concatdata);
+                                RaceStats = RaceStats.concat(RN +" - ("+ RT +") :\nPosition : " + RP + "\n\n");
+                            }
                         }
                         break;
                     }else {

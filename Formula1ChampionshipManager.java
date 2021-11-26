@@ -21,6 +21,9 @@ public class Formula1ChampionshipManager{
     public static int DriverCount = 0;
     public static int RacesCount =0;
 
+    // Variable to Create auto date and Race number 
+    public int Racenum = 1;
+
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
 
         for (int x = 0; x < MaxNumDrivers; x++) {//initializing the Driver type array with all data set to empty
