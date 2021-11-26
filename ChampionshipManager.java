@@ -2,116 +2,91 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.*;
+//import javax.swing.table.*;
+//import javax.swing.event.*;
 import java.util.Random;  
 // import static javax.swing.JOptionPane.showMessageDialog;
 
-public class ChampionshipManager extends Formula1ChampionshipManager{   // https://stackhowto.com/how-to-update-a-row-in-jtable/
+public class ChampionshipManager extends Formula1ChampionshipManager{  
     
-    // Create the main panel
-    private JPanel mainPanel = new JPanel(new BorderLayout());
     String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public int Racenum = 1;
-    // String data[][]={{"Speedy", "JRM", "DOH", "3","69","200","1","4",},    
-    //                  {"Kizura",  "JRM", "UAE", "3","32","100","0","2",},    
-    //                  {"Draj","Cupcake", "SL", "3","47","99","6","0",}
-    //                 }; 
+
+    // Create the main panel
+    private JPanel mainPanel = new JPanel(new BorderLayout());
 
     public ChampionshipManager(String[] args){
-        Scanner input = new Scanner(System.in);
-        //old code 
-        String column[]={"NAME","TEAM", "LOCATION", "No. of RACES", "No. of POINTS", "No. of 1st","No. of 2nd","No. of 3rd"};
-        String columnR[]={"RACE NAME","RACE DATE"};
-        //String TempRData[][]={{"MONKEY","03/12/19"},{"MONKEY","08/06/92"},{"MONKEY","06/02/92"},{"MONKEY","15/02/04"},{"MONKEY","25/11/21"},{"MONKEY","15/04/90"},};
+        //Scanner input = new Scanner(System.in);
 
-        JTable RaceTable=new JTable(GRData,columnR);  
-        //JTable RaceTable=new JTable(GDData,column);   
-        RaceTable.setBounds(30,40,300,300); 
-        RaceTable.setAutoCreateRowSorter(true);     //referanced from : https://stackhowto.com/how-to-sort-jtable-column-in-java-2-methods/
-        // old code above
-        //Add button
-        JButton addButton = new JButton("+ Add");
-        //Update button
-        JButton updateButton = new JButton("Generate a Random Race");
-        //Button panel
-        JPanel ButtonPannel = new JPanel();
-        //Add buttons to panel
-        ButtonPannel.add(addButton);
-        ButtonPannel.add(updateButton);
-    
-        //Create the JTextFields panel
-        JPanel TablePanel = new JPanel(new BorderLayout());
-        //Add the JTextFields to the panel
+        String column[]={"Name","Team", "Location", "No of Races", "Total Points", "No of 1st","No of 2nd","No of 3rd"};
+        String columnR[]={"Race Name","Race Date"};
+        String driverNameR = "Driver";
+        //GUI stuff starts here
 
-        //Add the panels and the table to the main panel
-        mainPanel.add(TablePanel, BorderLayout.NORTH);
-        mainPanel.add(new JScrollPane(RaceTable), BorderLayout.CENTER);
-        mainPanel.add(ButtonPannel, BorderLayout.SOUTH);
+        //Table codes
+        JTable StatTable = new JTable(GDData,column); // Driver Stats Table 
+        StatTable.setBounds(30,40,1000,300);
+        StatTable.setAutoCreateRowSorter(true);      //Sorting method referanced from : https://stackhowto.com/how-to-sort-jtable-column-in-java-2-methods/
 
-//--------------------------------------------------kiz start--------------------------------------------------------------------
+        JTable RaceTable=new JTable(GRData,columnR); // Race Stats Table 
+        RaceTable.setBounds(30,40,200,300); 
+        RaceTable.setAutoCreateRowSorter(true);     
 
-        //button panel
-        JPanel buttonPanel = new JPanel();
+        //Add buttons
+        JButton randRace1button = new JButton("Generate a Random Race");
+        JButton randRace2button = new JButton("Generate a Random Race with %");
+        JButton lookUpbutton = new JButton("Lookup All races of Driver");
 
-        //Text Fields  
-        JTextField tf1 = new JTextField();  
-        //tf1.setBounds(50,100, 200,30);  
-        tf1.setColumns(70); 
-        JPanel textPanel = new JPanel();
+        //Text Field that doubles as inpput section + consol log
+        JTextField TextFieldConsole = new JTextField();  
+        TextFieldConsole.setColumns(134);
+        TextFieldConsole.setText("\t\t\t\t\t    Welcome to the Championship Manager GUI!   |   This Textfield Acts as an 'Input Field' & a 'Console Log'!"); 
 
-        //action listener
-        addButton.addActionListener(new ActionListener(){  
-            public void actionPerformed(ActionEvent e){  
-                tf1.setText("KIZ IS DA BEST!!!");
-            }  
-        }); 
+        // unused Text area code 
+        JTextArea TxtArea=new JTextArea();
+        JScrollPane scroll=new JScrollPane(TxtArea);
+        TxtArea.setLineWrap(true);
+        scroll.setBounds(320, 100, 800,200);
 
         //Lables
-        JLabel l =new JLabel("SUS IMPOSTER SUSSY BAKA EREN YEAGER");  
-        l.setBounds(50,100, 250,20);   
-        JPanel lablePanel = new JPanel(); 
-        l.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel RaceDetesLF =new JLabel("Race Driver Data here :   " + driverNameR+ "   ");  
+        RaceDetesLF.setBounds(50,100, 250,20);   
+        //JPanel lablePanel = new JPanel(); 
+        RaceDetesLF.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //Table and table panel
-        JPanel tableOnePanel = new JPanel();
-        
-        JTable StatTable = new JTable(GDData,column);
-        StatTable.setBounds(30,40,1000,300);
-        JPanel tableTwoPanel = new JPanel();
-        StatTable.setAutoCreateRowSorter(true);
 
-        //extra panels added here
-        JPanel topPanel = new JPanel(new BorderLayout());
+        //3 Sub panels for main pannel!
+        JPanel topPanel = new JPanel(new BorderLayout()); //this panel holds the $Text Area$ + the 2 Tables [      |      |      ]
+        JPanel midPanel = new JPanel();                   //this panel holds the Textfield                  [   ==============   ]
+        JPanel bottomPanel = new JPanel();                //this panel holds the buttons                    [   ===  ===  ===    ]
 
-        //adding everything into the panels
-        //tableOnePanel.add(new JScrollPane(RaceTable));
-        //tableOnePanel.setBounds(30,40,1000,300);
+        //Pannel Sorting! :
 
-        //tableTwoPanel.add(new JScrollPane(StatTable));
-        //tableOnePanel.setBounds(30,40,500,300);
-
-        buttonPanel.add(updateButton);
-        buttonPanel.add(addButton);
-
-        //lablePanel.add(l);
-
-        textPanel.add(tf1);
-
+        //Adding $Text Area$ + the 2 Tables to the topPanel
+        topPanel.add(RaceDetesLF, BorderLayout.WEST );
         topPanel.add(new JScrollPane(StatTable), BorderLayout.CENTER);
         topPanel.add(new JScrollPane(RaceTable),BorderLayout.EAST);
-        topPanel.add(l, BorderLayout.WEST );
         
+
+        //Adding Textfield to the midPanel
+        midPanel.add(TextFieldConsole);
+
+        //Adding buttons to the bottomPanel
+        bottomPanel.add(randRace1button);
+        bottomPanel.add(randRace2button);
+        bottomPanel.add(lookUpbutton);
+
+        //Adding the 3 Sub pannels to mainPanel
         mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(textPanel, BorderLayout.CENTER);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        mainPanel.add(midPanel, BorderLayout.CENTER);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-//---------------------------------------------------kiz end-------------------------------------------------------------------
 
-/// new shyts 
-        // This code is called when the Update button is clicked.
-        updateButton.addActionListener(new ActionListener() {
+        // Button Presses!!!!
+
+        //action wen [randRace1button] button is clicked.
+        randRace1button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (RacesCount==MaxNumRaces){
@@ -121,11 +96,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                     int raceParticipant = 0;
                     ArrayList<Integer> numbers = new ArrayList<Integer>(); // keep track position numbers of each driver from race
 
-                    // System.out.print("\nEnter Race Name : ");
-                    // String RaceName = input.nextLine(); 
-                    // System.out.print("Enter Race Date : ");
-                    // String RaceDate = input.nextLine(); 
-
                     String RaceName = "Race " + String.valueOf(Racenum); 
                     String RaceDate;
                     if (Racenum > 9){
@@ -133,8 +103,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                     }else{
                         RaceDate = "0" + String.valueOf(Racenum) + "/12/21";
                     }
-
-                    //System.out.print("Generating Stats for all Registerd Drivers within the system...");
             
                     for (int x = 0; x < MaxNumDrivers; x++) {  // Stores all driver details line by line
                         if (!RaceDriver[x].getDriverN().equals("E")) {
@@ -146,16 +114,15 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                                 if (!numbers.contains(random) && random !=0) {
                                     numbers.add(random);
                                     RaceDriver[x].getDriverS().setRP(random);
-                                    //STORE RACE DATA AND POS IN HERE CODe
+
                                     for (int y = 0; y < MaxNumRaces; y++) {
                                         if (RaceDriver[x].getDRD(y).getRaceName().equals("NA")) {
                                             RaceDriver[x].setDRD(y, new DRData(RaceName, RaceDate, random)); //seter + constructor
                                             break;
                                         }
                                     }
-                                    //         //STORE RACE DATA AND POS IN HERE CODe ABOVE
+
                                     raceParticipant++;
-                                   // System.out.print("\n"+RaceDriver[x].getDriverN()+" got pos : " + random); // comment me out later
                                     Race = false;
                                 }
                             }    
@@ -220,6 +187,21 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                 return;
             }
         });
+
+        //action wen [randRace2button] button is clicked.
+        randRace2button.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){  
+                TextFieldConsole.setText("[Generate a Random Race with %] Has Been Pressed");
+            }  
+        }); 
+
+        //action wen [lookUpbutton] button is clicked.
+        lookUpbutton.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){  
+                TextFieldConsole.setText("[lookUpbutton] Has Been Pressed");
+            }  
+        }); 
+    
     }
 
     //Get the main panel
@@ -234,7 +216,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{   // https
                 JFrame f = new JFrame("Championship Manager");
                 f.getContentPane().add(new ChampionshipManager(args).getComponent());
                 //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                f.setSize(1500,600);
+                f.setSize(1500,522);
                 f.setLocationRelativeTo(null);
                 f.setVisible(true);
             }
