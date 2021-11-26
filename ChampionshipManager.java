@@ -57,14 +57,17 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
 
         //3 Sub panels for main pannel!
-        JPanel topPanel = new JPanel(new BorderLayout()); //this panel holds the $Text Area$ + the 2 Tables [      |      |      ]
-        JPanel midPanel = new JPanel();                   //this panel holds the Textfield                  [   ==============   ]
-        JPanel bottomPanel = new JPanel();                //this panel holds the buttons                    [   ===  ===  ===    ]
+        JPanel topPanel = new JPanel(new BorderLayout()); //this panel holds the $Text Area$ + the 2 Tables [ [   ] |      |    ]
+        JPanel topInnerPanel = new JPanel(new BorderLayout()); // this is an inner panel for topPanel       [ [   ] |      |    ]
+        JPanel midPanel = new JPanel();                   //this panel holds the Textfield                  [   ==============  ]
+        JPanel bottomPanel = new JPanel();                //this panel holds the buttons                    [   ===  ===  ===   ]
 
         //Pannel Sorting! :
+        topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );  //[      ]
+        topInnerPanel.add(TxtArea,BorderLayout.CENTER );     //[      ]
 
         //Adding $Text Area$ + the 2 Tables to the topPanel
-        topPanel.add(RaceDetesLF, BorderLayout.WEST );
+        topPanel.add(topInnerPanel, BorderLayout.WEST );
         topPanel.add(new JScrollPane(StatTable), BorderLayout.CENTER);
         topPanel.add(new JScrollPane(RaceTable),BorderLayout.EAST);
         
@@ -199,6 +202,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         lookUpbutton.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
                 TextFieldConsole.setText("[lookUpbutton] Has Been Pressed");
+                TxtArea.setText("BLAB BLAH \n LALALALAL \n LALALALALA");
             }  
         }); 
     
