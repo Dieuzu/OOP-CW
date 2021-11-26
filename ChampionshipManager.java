@@ -210,7 +210,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 // Step 1: check for the name of the driver
                 for (int i = 0; i < MaxNumDrivers;i++){
                     if (RaceDriver[i].getDriverN().equals(driverNameR)) {
-                        TextFieldConsole.setText(driverNameR + " Is a Regiserd Driver in this Season of F1 Championship!");
+                        TextFieldConsole.setText(driverNameR + " Is a Regiserd Driver in this Season of F1 Championship!        |        Loading All Race Data...");
                         //step 2 get the stats and start concatenation
                         for(int j = 0; j < MaxNumRaces; j++){
                             if (!RaceDriver[i].getDRD(j).getRaceName().equals("NA")){
