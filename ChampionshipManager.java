@@ -12,6 +12,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public int Racenum = 1;
+    public String driverNameR = "Driver";
 
     // Create the main panel
     private JPanel mainPanel = new JPanel(new BorderLayout());
@@ -21,7 +22,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
         String column[]={"Name","Team", "Location", "No of Races", "Total Points", "No of 1st","No of 2nd","No of 3rd"};
         String columnR[]={"Race Name","Race Date"};
-        String driverNameR = "Driver";
+
         //GUI stuff starts here
 
         //Table codes
@@ -37,6 +38,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         JButton randRace1button = new JButton("Generate a Random Race");
         JButton randRace2button = new JButton("Generate a Random Race with %");
         JButton lookUpbutton = new JButton("Lookup All races of Driver");
+        JButton clearbutton = new JButton("Clear Console");
 
         //Text Field that doubles as inpput section + consol log
         JTextField TextFieldConsole = new JTextField();  
@@ -50,7 +52,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         scroll.setBounds(320, 100, 800,200);
 
         //Lables
-        JLabel RaceDetesLF =new JLabel("Race Driver Data here :   " + driverNameR+ "   ");  
+        JLabel RaceDetesLF =new JLabel(driverNameR+ " Race Data :                      ");    
         RaceDetesLF.setBounds(50,100, 250,20);   
         //JPanel lablePanel = new JPanel(); 
         RaceDetesLF.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -67,7 +69,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         topInnerPanel.add(TxtArea,BorderLayout.CENTER );     //[      ]
 
         //Adding $Text Area$ + the 2 Tables to the topPanel
-        topPanel.add(topInnerPanel, BorderLayout.WEST );
+        topPanel.add(new JScrollPane(topInnerPanel), BorderLayout.WEST );
         topPanel.add(new JScrollPane(StatTable), BorderLayout.CENTER);
         topPanel.add(new JScrollPane(RaceTable),BorderLayout.EAST);
         
@@ -79,6 +81,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         bottomPanel.add(randRace1button);
         bottomPanel.add(randRace2button);
         bottomPanel.add(lookUpbutton);
+        bottomPanel.add(clearbutton);
 
         //Adding the 3 Sub pannels to mainPanel
         mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -201,11 +204,40 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         //action wen [lookUpbutton] button is clicked.
         lookUpbutton.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
-                TextFieldConsole.setText("[lookUpbutton] Has Been Pressed");
-                TxtArea.setText("BLAB BLAH \n LALALALAL \n LALALALALA");
+                //TextFieldConsole.setText("[lookUpbutton] Has Been Pressed");
+                driverNameR = TextFieldConsole.getText();
+                String RaceStats = "";
+                // Step 1: check for the name of the driver
+                for (int i = 0; i < MaxNumDrivers;i++){
+                    if (RaceDriver[i].getDriverN().equals(driverNameR)) {
+                        TextFieldConsole.setText(driverNameR + " Is a Regiserd Driver in this Season of F1 Championship!");
+                        //step 2 get the stats and start concatenation
+                        for(int j = 0; j < MaxNumRaces; j++){
+                            String RN = RaceDriver[i].getDRD(j).getRaceName();
+                            String RT = RaceDriver[i].getDRD(j).getRaceDate();
+                            String RP = String.valueOf(RaceDriver[i].getDRD(j).getRacepostion());
+
+                            //Concatdata = RN +" ("+ RT +")\nPosition : " + RP + "\n\n";
+                            //RaceStats = RaceStats.concat(Concatdata);
+                            RaceStats = RaceStats.concat(RN +" ("+ RT +")\nPosition : " + RP + "\n\n");
+                        }
+                        break;
+                    }else {
+                        TextFieldConsole.setText(driverNameR + " Is not a Regiserd Driver in this Season of F1 Championship!");
+                    }
+                }
+                RaceDetesLF.setText(driverNameR+ " Race Data :   ");  
+                TxtArea.setText(RaceStats);
             }  
         }); 
-    
+
+        //action wen [randRace2button] button is clicked.
+        clearbutton.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){  
+                TextFieldConsole.setText("");
+            }  
+        }); 
+
     }
 
     //Get the main panel
