@@ -1,67 +1,383 @@
-8
+9
 Speedy
 JRM
 DOH
+10
+105
 0
-0
-0
-0
-0
+1
+1
+Race 1
+01/12/21
+8
+Race 2
+02/12/21
+4
+Race 3
+03/12/21
+5
+Race 4
+04/12/21
+7
+Race 5
+05/12/21
+2
+Race 6
+06/12/21
+3
+Race 7
+07/12/21
+6
+Race 8
+08/12/21
+4
+Race 9
+09/12/21
+6
+Race 10
+10/12/21
+4
 Kizura
 JRMA
 UAE
-0
-0
-0
-0
-0
+10
+112
+1
+1
+1
+Race 1
+01/12/21
+2
+Race 2
+02/12/21
+9
+Race 3
+03/12/21
+4
+Race 4
+04/12/21
+6
+Race 5
+05/12/21
+3
+Race 6
+06/12/21
+6
+Race 7
+07/12/21
+7
+Race 8
+08/12/21
+1
+Race 9
+09/12/21
+5
+Race 10
+10/12/21
+6
 Draj
 Cupcakes
 SL
-0
-0
-0
-0
-0
-Tharini
-NoobRaze
-SL
-0
-0
-0
-0
-0
-Imalsha
-Galbanda
-SL
-0
-0
-0
-0
-0
+10
+136
+2
+1
+2
+Race 1
+01/12/21
+3
+Race 2
+02/12/21
+8
+Race 3
+03/12/21
+9
+Race 4
+04/12/21
+1
+Race 5
+05/12/21
+1
+Race 6
+06/12/21
+4
+Race 7
+07/12/21
+5
+Race 8
+08/12/21
+3
+Race 9
+09/12/21
+2
+Race 10
+10/12/21
+5
 Nessa
 Dreadnaw
 UK
+10
+81
+1
 0
 0
+Race 1
+01/12/21
+5
+Race 2
+02/12/21
+5
+Race 3
+03/12/21
+7
+Race 4
+04/12/21
+8
+Race 5
+05/12/21
+5
+Race 6
+06/12/21
+5
+Race 7
+07/12/21
+1
+Race 8
+08/12/21
+9
+Race 9
+09/12/21
+9
+Race 10
+10/12/21
+9
+N
+i <3 Kiz
+Unova
+10
+116
+1
+1
+3
+Race 1
+01/12/21
+1
+Race 2
+02/12/21
+3
+Race 3
+03/12/21
+3
+Race 4
+04/12/21
+5
+Race 5
+05/12/21
+9
+Race 6
+06/12/21
+9
+Race 7
+07/12/21
+9
+Race 8
+08/12/21
+2
+Race 9
+09/12/21
+4
+Race 10
+10/12/21
+3
+Jett
+Valorant
+KR
+10
+104
+1
+2
+1
+Race 1
+01/12/21
+9
+Race 2
+02/12/21
+1
+Race 3
+03/12/21
+6
+Race 4
+04/12/21
+2
+Race 5
+05/12/21
+8
+Race 6
+06/12/21
+2
+Race 7
+07/12/21
+8
+Race 8
+08/12/21
+8
+Race 9
+09/12/21
+3
+Race 10
+10/12/21
+7
+Imalsha
+GalBanda
+LK
+10
+95
+1
 0
 0
-0
+Race 1
+01/12/21
+4
+Race 2
+02/12/21
+6
+Race 3
+03/12/21
+1
+Race 4
+04/12/21
+4
+Race 5
+05/12/21
+7
+Race 6
+06/12/21
+8
+Race 7
+07/12/21
+4
+Race 8
+08/12/21
+6
+Race 9
+09/12/21
+8
+Race 10
+10/12/21
+8
+Tharini
+NoobRaze
+SL
+10
+121
+2
+1
+1
+Race 1
+01/12/21
+7
+Race 2
+02/12/21
+7
+Race 3
+03/12/21
+2
+Race 4
+04/12/21
+9
+Race 5
+05/12/21
+4
+Race 6
+06/12/21
+1
+Race 7
+07/12/21
+3
+Race 8
+08/12/21
+7
+Race 9
+09/12/21
+7
+Race 10
+10/12/21
+1
 Bea
 SirFetched
 UK
+10
+130
+1
+3
+1
+Race 1
+01/12/21
+6
+Race 2
+02/12/21
+2
+Race 3
+03/12/21
+8
+Race 4
+04/12/21
+3
+Race 5
+05/12/21
+6
+Race 6
+06/12/21
+7
+Race 7
+07/12/21
+2
+Race 8
+08/12/21
+5
+Race 9
+09/12/21
+1
+Race 10
+10/12/21
+2
+E
+E
+E
 0
 0
 0
 0
 0
-N
-Plasma
-Unova
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
 0
 E
 E
@@ -71,37 +387,35 @@ E
 0
 0
 0
-E
-E
-E
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
-E
-E
-E
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
+NA
+NA
 0
-0
-E
-E
-E
-0
-0
-0
-0
-0
-E
-E
-E
-0
-0
-0
-0
+NA
+NA
 0
 E
 E
@@ -111,6 +425,36 @@ E
 0
 0
 0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
 E
 E
 E
@@ -118,4 +462,110 @@ E
 0
 0
 0
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+E
+E
+E
+0
+0
+0
+0
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+E
+E
+E
+0
+0
+0
+0
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
+0
+NA
+NA
 0

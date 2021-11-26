@@ -28,7 +28,7 @@ public class Formula1Driver {
     }
 
     //setters
-    public void setRP(int s) {
+    public void setRP(int s) { // compound function
         racePosition = s;
         if (racePosition == 1){
             numFirstPos +=1;

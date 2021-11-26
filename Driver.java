@@ -3,8 +3,18 @@ public class Driver {
     private String driverLocation;
     private Team driverTeam;
     private Formula1Driver driverStats;
- 
-    //make a 2d array holding data of all races and dates and positions
+
+    
+    //make an array holding data of all races and dates and positions
+    private DRData DriverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumDrivers];
+
+    public DRData getDRD(int x) {
+            return DriverRaceData[x];
+    }
+
+    public void setDRD(int x, DRData y) { //Setter
+        DriverRaceData[x] = y;
+    }
 
     //Getters 
     public String getDriverN() {
@@ -48,13 +58,28 @@ public class Driver {
         driverStats = Stats;
     } 
 
+    public void DriverRaceInit(){
+
+        for (int y = 0; y < Formula1ChampionshipManager.MaxNumRaces; y++) {
+            DriverRaceData[y] = new DRData("NA", "NA", 0);//initializing the races type array with all data set to empty
+        }
+        return;
+    }
+    
+
     public Driver(String Name, String Location, Team Team){
         driverName = Name ;
         driverLocation= Location ;
         driverTeam= Team ;
+
     } 
 
     public Driver(Formula1Driver Stats){ // overloading
         driverStats = Stats;
     } 
+
+    // public Driver(){ // overloading
+    //     for (int y = 0; y < Formula1ChampionshipManager.MaxNumDrivers; y++) //initializing the races type array with all data set to empty
+    //        DriverRaceData[y] = new DRData("NA", "NA", 0);
+    // } 
 }

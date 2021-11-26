@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Formula1ChampionshipManager{
 
     //Manupilate all max number of drivers and races with following variables
-    public static int MaxNumDrivers = 15;
-    public static int MaxNumRaces = 10;
+    public static final int MaxNumDrivers = 15;
+    public static final int MaxNumRaces = 10;
 
     //Array of objects to hold driver and racer data
     public static Driver[] RaceDriver = new Driver[MaxNumDrivers]; 
@@ -23,14 +23,41 @@ public class Formula1ChampionshipManager{
 
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
 
-        for (int x = 0; x < MaxNumDrivers; x++) //initializing the Driver type array with all data set to empty
+        for (int x = 0; x < MaxNumDrivers; x++) {//initializing the Driver type array with all data set to empty
             RaceDriver[x] = new Driver("E", "E", new Team("E"), new Formula1Driver(0));
+            RaceDriver[x].DriverRaceInit();
+        }    
         for (int y = 0; y < MaxNumRaces; y++) //initializing the races type array with all data set to empty
             RaceF1[y] = new Races("NA", "NA");
+
 
         LoadPrgrmData(); // Loads all save data on Start!
         PrintMenu(args); // loads the menu for User
     }
+
+    public static void Printdata(){ // EXPERIMENTAL !
+        for (int x = 0; x < MaxNumDrivers; x++){
+            for (int y = 0; y < MaxNumRaces; y++){
+                System.out.print("Driver "+ RaceDriver[x].getDriverN() + " participated in race " + RaceDriver[x].getDRD(y).getRaceName() + " On " + RaceDriver[x].getDRD(y).getRaceDate() 
+                + " and came in " + RaceDriver[x].getDRD(y).getRacepostion()+ " Place!\n");
+            }
+        }
+    }
+
+    // public static void setdata(Scanner input){  // EXPERIMENTAL !
+    //     System.out.print("\nEnter Race Name : ");
+    //     String RaceName = input.nextLine(); 
+    //     System.out.print("Enter Race Date (DD/MM/YY): ");
+    //     String RaceDate = input.nextLine(); 
+    //     System.out.print("Enter Positon of the driver in this race: ");
+    //     int Racepos = Integer.parseInt(input.nextLine());; 
+
+    //     RaceDriver[0].getDRD(3).setRaceName(RaceName);
+    //     RaceDriver[0].getDRD(3).setRaceDate(RaceDate);
+    //     RaceDriver[0].getDRD(3).setRacepostion(Racepos);
+
+    // }
+
 
     //0.  Print Menu method
     public static void PrintMenu(String[] args) { 
@@ -57,10 +84,12 @@ public class Formula1ChampionshipManager{
             if (userInput.equals("1")) {
                 System.out.print("\nStarted Add New Driver Script ✔\n");
                 AddDriver(input);
-                Resubmit(input);
+                //setdata(input); // Experimental
+                Resubmit(input); // <---------------------------------------------UNCOMMNET ME LATER
             } else if (userInput.equals("2")) {
                 System.out.print("\nStarted Delete Driver Script ✔\n");
-                DelDriver(input);
+                Printdata();// Experimental
+                DelDriver(input); // <---------------------------------------------UNCOMMNET ME LATER
             } else if (userInput.equals("3")) {
                 System.out.print("\nStarted Change Driver Team Script ✔\n");
                 ChangeTeamDriver(input);
@@ -139,6 +168,7 @@ public class Formula1ChampionshipManager{
         for (int x = 0; x < MaxNumDrivers; x++) {
             if (RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam), new Formula1Driver(DPos));
+                RaceDriver[x].DriverRaceInit();
                 DriverCount += 1;
                 if (DPos == 0){
                     System.out.print("\n✔ Added Data for Driver : " + RaceDriver[x].getDriverN() 
@@ -197,6 +227,7 @@ public class Formula1ChampionshipManager{
             } else {
                 System.out.print("\nDriver " + RaceDriver[DDNo].getDriverN()+ " of Team " + RaceDriver[DDNo].getDriverT().getTeamN() + " Has been Removed From Formula 1 Roster ✔\n");
                 RaceDriver[DDNo] = new Driver("E", "E", new Team("E"), new Formula1Driver(0));
+                RaceDriver[DDNo].DriverRaceInit(); /// LOOOK INTO THIS SHYTTTTT
                 //ShowAllDriver(); // COMMENT ME OUT AFTER ALL TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 DriverCount --;
                 DelCheck = false;
@@ -395,6 +426,21 @@ public class Formula1ChampionshipManager{
                 bkp.newLine();
                 bkp.write(String.valueOf(RaceDriver[x].getDriverS().getTP()));
                 bkp.newLine();
+                // System.out.print("\nDriver part 1 Done Properly for"+RaceDriver[x].getDriverN()+ "!\n");
+
+                // Experimental ----
+                for (int y = 0; y < MaxNumRaces; y++){
+                    bkp.write(RaceDriver[x].getDRD(y).getRaceName());   // Race name
+                    bkp.newLine();
+                    bkp.write(RaceDriver[x].getDRD(y).getRaceDate());              // Race Date
+                    bkp.newLine();
+                    bkp.write(String.valueOf(RaceDriver[x].getDRD(y).getRacepostion()));  // Race postion
+                    bkp.newLine();
+                    // System.out.print("\nSucessfully Saved "+ RaceDriver[x].getDriverN()+ " Data for Race " + RaceDriver[x].getDRD(y).getRaceName() + " that took place on " 
+                    // + RaceDriver[x].getDRD(y).getRaceDate() + " where he came in postion : " + RaceDriver[x].getDRD(y).getRacepostion());
+                }
+                // Experimental ----
+                // System.out.print("\nDriver part 2 Done Properly for"+RaceDriver[x].getDriverN()+ "!\n");
             }
             System.out.print("\nSucessfully Saved all F1 Registerd Driver data to Drivers.txt!");
         } catch (IOException e) {
@@ -477,10 +523,20 @@ public class Formula1ChampionshipManager{
 
                 RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam)); // this running an exclusive overloaded constructor
                 RaceDriver[x].setDriverS(new Formula1Driver(Rnum, Pnum, FPnum, SPnum, TPnum)); // this running an exclusive overloaded constructor
+                // Experimental ----
+                for (int y = 0; y < MaxNumRaces; y++){
+
+                    String RaceName = Loader.nextLine(); 
+                    String RaceDate = Loader.nextLine(); 
+                    int RacePos = Integer.parseInt(Loader.nextLine());
+
+                    RaceDriver[x].setDRD(y,new DRData(RaceName, RaceDate, RacePos)) ;
+                }
+                // Experimental ----
                 DiverSaveCheck = true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
 
         try {
@@ -495,7 +551,7 @@ public class Formula1ChampionshipManager{
                 RaceSaveCheck = true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         if (DiverSaveCheck && RaceSaveCheck) {
@@ -509,17 +565,26 @@ public class Formula1ChampionshipManager{
         }
     }
 
-    //experimental table drawer
+    //experimental Driver table drawer
     public static String[][] GrabDriverData() {
         String GDData[][] = new String[DriverCount][8];
 
         for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
             if (!RaceDriver[x].getDriverN().equals("E")) {
+                String NoPoints;
                 String Name = RaceDriver[x].getDriverN();
                 String Team = RaceDriver[x].getDriverT().getTeamN();
                 String Location = RaceDriver[x].getDriverL();
                 String NoRace = String.valueOf(RaceDriver[x].getDriverS().getNumRaces());
-                String NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+
+                if (RaceDriver[x].getDriverS().getNumPoint() > 99){
+                    NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }else if (RaceDriver[x].getDriverS().getNumPoint() > 9) {
+                    NoPoints = "0"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }else{
+                    NoPoints = "00"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }
+                
                 String NoFP = String.valueOf(RaceDriver[x].getDriverS().getFP());
                 String NoSP = String.valueOf(RaceDriver[x].getDriverS().getSP());
                 String NoTP = String.valueOf(RaceDriver[x].getDriverS().getTP());
@@ -535,6 +600,26 @@ public class Formula1ChampionshipManager{
             }
         }
         return GDData;
+    }
+
+    //experimental Race table drawer
+    public static String[][] GrabRaceData() {
+        String GRData[][] = new String[MaxNumRaces][2];
+
+        for (int x = 0; x < RacesCount; x++) {  // Stores all Race details line by line
+            if (!RaceF1[x].getMapN().equals("NA")) {
+
+                String Name = RaceF1[x].getMapN();
+                String Date = RaceF1[x].getRaceD();
+
+    
+                GRData[x][0] = Name;
+                //GRData[x][1] = Participants; //maybe later ? if have time
+                GRData[x][1] = Date;
+
+            }
+        }
+        return GRData;
     }
 
     // new Random race Function
