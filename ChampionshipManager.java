@@ -9,12 +9,14 @@ import java.util.Random;
 
 public class ChampionshipManager extends Formula1ChampionshipManager{  
 
-    public static String RaceName; 
-    public static String RaceDate;
+
     
     String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public static Driver[] RaceDriverBKP = new Driver[DriverCount];
+
+    public static String RaceName; 
+    public static String RaceDate;
 
     public static ArrayList<Integer> StartPositionTracker = new ArrayList<Integer>(); // keeps track of Starting position for each driver from race
     public static ArrayList<Integer> FinalPositionTracker = new ArrayList<Integer>(); // keeps track of Finish position for each driver from race
