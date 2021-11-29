@@ -1,22 +1,17 @@
 public class Driver {
+
     private String driverName;
     private String driverLocation;
     private Team driverTeam;
     private Formula1Driver driverStats;
 
-    // temp details vars <<these are exclusive for Q3. Part 5>>
-    private int StartPosition;
-    private int FinishPosition;
-    private double WinPercentPerDriver;
-    // these are exclusive for Q3. Part 5
+    // Temp Detail variables <<these are exclusive for Q3. Part 5>>
+    private int startPosition;
+    private int finishPosition;
+    private double winPercentPerDriver;
 
-    //make an array holding data of all races and dates and positions
-    private DRData DriverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumDrivers];
-
-
-
-
-
+    //An array holding data of all races and dates and positions for driver Class
+    private DRData driverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumDrivers];
 
     //Getters 
     public String getDriverN() {
@@ -32,18 +27,18 @@ public class Driver {
         return driverStats;
     }
 
-    public DRData getDRD(int x) { 
-        return DriverRaceData[x];
-    }
-
     public int getStartP() {
-        return StartPosition;
+        return startPosition;
     }
     public int getFinishP() {
-        return FinishPosition;
+        return finishPosition;
     }
     public double getWinPercent() {
-        return WinPercentPerDriver;
+        return winPercentPerDriver;
+    }
+
+    public DRData getDRD(int x) { 
+        return driverRaceData[x];
     }
 
 
@@ -62,24 +57,24 @@ public class Driver {
     }
 
     public void setDRD(int x, DRData y) { 
-        DriverRaceData[x] = y;
+        driverRaceData[x] = y;
     }
 
     public void setStartP(int a) {
-        StartPosition = a;
+        startPosition = a;
     }
     public void setFinishP(int b) {
-        FinishPosition = b;
+        finishPosition = b;
     }
     public void setWinPercent(double c) {
-        WinPercentPerDriver = c;
+        winPercentPerDriver = c;
     }
 
-    // Compund Functions 
+    // Memember function to initialize the Array that holds all records of the driver object in all races he participate
     public void DriverRaceInit(){
 
         for (int y = 0; y < Formula1ChampionshipManager.MaxNumRaces; y++) {
-            DriverRaceData[y] = new DRData("NA", "NA", 0);//initializing the races type array with all data set to empty
+            driverRaceData[y] = new DRData("NA", "NA", 0);//initializing the races type array with all data set to Default
         }
         return;
     }
@@ -92,14 +87,14 @@ public class Driver {
         driverStats = Stats;
     } 
 
-    public Driver(String Name, String Location, Team Team){ // overloading
+    public Driver(String Name, String Location, Team Team){ // Overloading
         driverName = Name ;
         driverLocation= Location ;
         driverTeam= Team ;
 
     } 
 
-    public Driver(Formula1Driver Stats){ // overloading
+    public Driver(Formula1Driver Stats){ // Overloading
         driverStats = Stats;
     } 
 

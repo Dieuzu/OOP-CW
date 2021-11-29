@@ -1,29 +1,28 @@
 public class Races {
-    private String MapName;
-    private String RDate;
 
-    //Getters 
+    private String raceName; // Holds Race name for Each completed Race
+    private String raceDate; // Holds race Date for each Completed Race
+
+    //Getter
     public String getMapN() {
-        return MapName;
+        return raceName;
     }
-
     public String getRaceD() {
-        return RDate;
+        return raceDate;
     }
 
-    //Setters
+    //Setter
     public void setMapN(String y) { 
-        MapName = y;
+        raceName = y;
     }
-
     public void setRaceD(String z) { 
-        RDate = z;
+        raceDate = z;
     }
 
     //Constructor
     public Races(String MName, String Date) { 
-        MapName = MName;
-        RDate = Date;
+        raceName = MName;
+        raceDate = Date;
     }
     
 }

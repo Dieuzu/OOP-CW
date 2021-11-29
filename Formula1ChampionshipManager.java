@@ -38,30 +38,6 @@ public class Formula1ChampionshipManager{
         PrintMenu(args); // loads the menu for User
     }
 
-    public static void Printdata(){ // EXPERIMENTAL !
-        for (int x = 0; x < MaxNumDrivers; x++){
-            for (int y = 0; y < MaxNumRaces; y++){
-                System.out.print("Driver "+ RaceDriver[x].getDriverN() + " participated in race " + RaceDriver[x].getDRD(y).getRaceName() + " On " + RaceDriver[x].getDRD(y).getRaceDate() 
-                + " and came in " + RaceDriver[x].getDRD(y).getRacepostion()+ " Place!\n");
-            }
-        }
-    }
-
-    // public static void setdata(Scanner input){  // EXPERIMENTAL !
-    //     System.out.print("\nEnter Race Name : ");
-    //     String RaceName = input.nextLine(); 
-    //     System.out.print("Enter Race Date (DD/MM/YY): ");
-    //     String RaceDate = input.nextLine(); 
-    //     System.out.print("Enter Positon of the driver in this race: ");
-    //     int Racepos = Integer.parseInt(input.nextLine());; 
-
-    //     RaceDriver[0].getDRD(3).setRaceName(RaceName);
-    //     RaceDriver[0].getDRD(3).setRaceDate(RaceDate);
-    //     RaceDriver[0].getDRD(3).setRacepostion(Racepos);
-
-    // }
-
-
     //0.  Print Menu method
     public static void PrintMenu(String[] args) { 
         Scanner input = new Scanner(System.in);
@@ -87,12 +63,10 @@ public class Formula1ChampionshipManager{
             if (userInput.equals("1")) {
                 System.out.print("\nStarted Add New Driver Script ✔\n");
                 AddDriver(input);
-                //setdata(input); // Experimental
-                Resubmit(input); // <---------------------------------------------UNCOMMNET ME LATER
+                Resubmit(input);
             } else if (userInput.equals("2")) {
                 System.out.print("\nStarted Delete Driver Script ✔\n");
-                Printdata();// Experimental
-                DelDriver(input); // <---------------------------------------------UNCOMMNET ME LATER
+                DelDriver(input); 
             } else if (userInput.equals("3")) {
                 System.out.print("\nStarted Change Driver Team Script ✔\n");
                 ChangeTeamDriver(input);
@@ -110,8 +84,6 @@ public class Formula1ChampionshipManager{
                 SaveData();
             } else if (userInput.equals("8")) {
                 System.out.print("\nStarted GUI Script ✔\n");
-                //function()
-                //MenuCheck = false;
                 ChampionshipManager.main(args);
 
             } else if (userInput.equals("0")) {

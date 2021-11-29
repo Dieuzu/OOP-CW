@@ -1,35 +1,34 @@
-public class DRData { // stands for Driver Race Data
-    private String RaceName;
-    private String RaceDate;
-    private int Racepostion;
+public class DRData { //DRData stands for "Driver Race Data"
+    private String raceName;
+    private String raceDate;
+    private int racepostion;
 
+    //Getters
     public String getRaceName() {
-        return this.RaceName;
+        return raceName;
     }
-
-    public void setRaceName(String RaceName) {
-        this.RaceName = RaceName;
-    }
-
     public String getRaceDate() {
-        return this.RaceDate;
+        return raceDate;
     }
-
-    public void setRaceDate(String RaceDate) {
-        this.RaceDate = RaceDate;
-    }
-
     public int getRacepostion() {
-        return this.Racepostion;
+        return racepostion;
     }
 
+    //Setters
+    public void setRaceName(String RaceName) {
+        raceName = RaceName;
+    }
+    public void setRaceDate(String RaceDate) {
+        raceDate = RaceDate;
+    }
     public void setRacepostion(int Racepostion) {
-        this.Racepostion = Racepostion;
+        racepostion = Racepostion;
     }
 
+    //Constructor
     DRData(String x, String y, int z){
-        RaceName = x;
-        RaceDate = y;
-        Racepostion = z;
+        raceName = x;
+        raceDate = y;
+        racepostion = z;
     }
 }

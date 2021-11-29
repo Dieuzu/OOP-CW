@@ -1,17 +1,19 @@
 public class Team {
-    private String teamName;
 
-    //Getters 
+    private String teamName; // Holds the Team name of a Driver from Driver class
+
+    //Getter
     public String getTeamN() {
         return teamName;
     }
-    //Setters 
+    //Setter
     public void setTeamN(String name) {
         teamName = name;
     }
     
-    //Contructors
+    //Contructor
     public Team(String Name){
         teamName = Name;
     }
+
 }

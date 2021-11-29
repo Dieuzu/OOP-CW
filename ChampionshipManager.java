@@ -9,8 +9,6 @@ import java.util.Random;
 
 public class ChampionshipManager extends Formula1ChampionshipManager{  
 
-
-    
     String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public static Driver[] RaceDriverBKP = new Driver[DriverCount];
@@ -21,7 +19,9 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     public static ArrayList<Integer> StartPositionTracker = new ArrayList<Integer>(); // keeps track of Starting position for each driver from race
     public static ArrayList<Integer> FinalPositionTracker = new ArrayList<Integer>(); // keeps track of Finish position for each driver from race
     //public int Racenum = 1;
-    public String driverNameR = "Driver";
+    public String driverNameR = "Driver"; 
+
+    public static String RaceStatMSG = ""; 
 
     // Create the main panel
     private JPanel mainPanel = new JPanel(new BorderLayout());
@@ -32,7 +32,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             public void run() {
                 JFrame f = new JFrame("Championship Manager");
                 f.getContentPane().add(new ChampionshipManager(args).getComponent());
-                //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //Disabled Cause we dunt wanna close entire program wen gui is closed
                 f.setSize(1500,522);
                 f.setLocationRelativeTo(null);
                 f.setVisible(true);
@@ -41,8 +41,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     }
 
     public ChampionshipManager(String[] args){
-        //Scanner input = new Scanner(System.in);
-
         String column[]={"Name","Team", "Location", "No of Races", "Total Points", "No of 1st","No of 2nd","No of 3rd"};
         String columnR[]={"Race Name","Race Date"};
 
@@ -51,9 +49,9 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         //Table codes
         JTable StatTable = new JTable(GDData,column); // Driver Stats Table 
         StatTable.setBounds(30,40,1000,300);
-        StatTable.setAutoCreateRowSorter(true);      //Sorting method referanced from : https://stackhowto.com/how-to-sort-jtable-column-in-java-2-methods/
+        StatTable.setAutoCreateRowSorter(true);       //Sorting method referanced from : https://stackhowto.com/how-to-sort-jtable-column-in-java-2-methods/
 
-        JTable RaceTable=new JTable(GRData,columnR); // Race Stats Table 
+        JTable RaceTable=new JTable(GRData,columnR);  // Race Stats Table 
         RaceTable.setBounds(30,40,200,300); 
         RaceTable.setAutoCreateRowSorter(true);     
 
@@ -82,14 +80,14 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
 
         //3 Sub panels for main pannel!
-        JPanel topPanel = new JPanel(new BorderLayout()); //this panel holds the $Text Area$ + the 2 Tables [ [   ] |      |    ]
-        JPanel topInnerPanel = new JPanel(new BorderLayout()); // this is an inner panel for topPanel       [ [   ] |      |    ]
-        JPanel midPanel = new JPanel();                   //this panel holds the Textfield                  [   ==============  ]
-        JPanel bottomPanel = new JPanel();                //this panel holds the buttons                    [   ===  ===  ===   ]
+        JPanel topPanel = new JPanel(new BorderLayout());             //this panel holds the $Text Area$ + the 2 Tables [ [   ] |      |    ]
+        JPanel topInnerPanel = new JPanel(new BorderLayout());        // this is an inner panel for topPanel            [ [   ] |      |    ]
+        JPanel midPanel = new JPanel();                               //this panel holds the Textfield                  [   ==============  ]
+        JPanel bottomPanel = new JPanel();                            //this panel holds the buttons                    [   ===  ===  ===   ]
 
         //Pannel Sorting! :
-        topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );  //[      ]
-        topInnerPanel.add(TxtArea,BorderLayout.CENTER );     //[      ]
+        topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );           //[      ]
+        topInnerPanel.add(TxtArea,BorderLayout.CENTER );              //[      ]
 
         //Adding $Text Area$ + the 2 Tables to the topPanel
         topPanel.add(new JScrollPane(topInnerPanel), BorderLayout.WEST );
@@ -116,8 +114,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
         //GUI stuff ENDS here ==================================================================================================================================   
 
-        // Button Presses!!!!
-
+        // Button Presses Actions!
         //action wen [randRace1button] button is clicked.
         randRace1button.addActionListener(new ActionListener() {
             @Override
@@ -268,7 +265,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                         if (RaceF1[x].getMapN().equals("NA")) {
                             RaceF1[x] = new Races(RaceName, RaceDate);
                             RacesCount ++;
-                            JOptionPane.showMessageDialog(null,  "Added Data for : " + RaceF1[x].getMapN()+ " That took Place on " + RaceF1[x].getRaceD() + " With " + DriverCount + " dirvers!");
+                            JOptionPane.showMessageDialog(null,  "Added Data for : " + RaceF1[x].getMapN()+ " That took Place on " + RaceF1[x].getRaceD() + " With " + DriverCount + " dirvers! \n\n" + RaceStatMSG);
                             break;
                         }
                     }
@@ -391,6 +388,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     //Step 2.0
     public static void FinishPositions(JTextField TextFieldConsole) {
+
+        RaceStatMSG = ""; 
     
         //System.out.print("\n\nGenerating Final postions For the Race : \n");
         RaceWinnerDecider();
@@ -412,10 +411,12 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             }
 
             if (RaceDriverBKP[x].getFinishP() == winner){  
-                TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !");
+                TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + "\nWon the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !");
+                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n");
                 //System.out.print("\n"+RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n"); // console log msg
             }else {
                 //System.out.print(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");  // UNCOMMENT FOR DEMONSTRATION PURPOSES
+                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");
             } 
         }
     }
@@ -492,8 +493,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             RaceDate = "0" + String.valueOf(Racenum) + "/12/21";
         }
         
-        boolean UpdateStats = true;
-        while (UpdateStats){
+
             for (int x = 0; x < DriverCount; x++) {
                 for (int y = 0; y < MaxNumDrivers; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
@@ -513,8 +513,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                     }
                 }
             }
-            UpdateStats = false;
-        }
 
     }
 }

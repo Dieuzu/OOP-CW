@@ -1,144 +1,147 @@
 
 public class Formula1Driver {
-    private int numFirstPos = 0;
-    private int numSecondPos = 0;
-    private int numThirdPos = 0;
+
     private int racePosition = 0;
-    private int numPoints = 0;
-    private int numRaces = 0;
+    private int numberOfPoints = 0;
+    private int numberOfRaces = 0;
+
+    private int numberOfFirstPositions = 0;
+    private int numberOfSecondPositions = 0;
+    private int numberOfThirdPositions = 0;
 
     //Getters 
     public int getRP() {
         return racePosition;
     }
     public int getFP() {
-        return numFirstPos;
+        return numberOfFirstPositions;
     }
     public int getSP() {
-        return numSecondPos;
+        return numberOfSecondPositions;
     }
     public int getTP() {
-        return numThirdPos;
+        return numberOfThirdPositions;
     }
     public int getNumPoint() {
-        return numPoints;
+        return numberOfPoints;
     }
     public int getNumRaces() {
-        return numRaces;
+        return numberOfRaces;
     }
 
-    //setters
-    public void setRP(int s) { // compound function
+    //Setters
+    public void setRP(int s) { // Member function for calculating points and asigning records of Special finish postions of a race 
         racePosition = s;
-        if (racePosition == 1){
-            numFirstPos +=1;
-            numPoints += 25;
-            numRaces += 1;
+        if (racePosition == 1){ // 1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
+            numberOfFirstPositions +=1;
+            numberOfPoints += 25;
+            numberOfRaces += 1;
         }else if (racePosition == 2){
-            numSecondPos += 1;
-            numPoints += 18;
-            numRaces += 1;
+            numberOfSecondPositions += 1;
+            numberOfPoints += 18;
+            numberOfRaces += 1;
         }else if (racePosition == 3){
-            numThirdPos +=1;
-            numPoints += 15;
-            numRaces += 1;
+            numberOfThirdPositions +=1;
+            numberOfPoints += 15;
+            numberOfRaces += 1;
         }else if (racePosition == 4){
-            numPoints += 12;
-            numRaces += 1;
+            numberOfPoints += 12;
+            numberOfRaces += 1;
         }else if (racePosition == 5){
-            numPoints += 10;
-            numRaces += 1;
+            numberOfPoints += 10;
+            numberOfRaces += 1;
         }else if (racePosition == 6){
-            numPoints += 8;
-            numRaces += 1;
+            numberOfPoints += 8;
+            numberOfRaces += 1;
         }else if (racePosition == 7){
-            numPoints += 6;
-            numRaces += 1;
+            numberOfPoints += 6;
+            numberOfRaces += 1;
         }else if (racePosition == 8){
-            numPoints += 4;
-            numRaces += 1;
+            numberOfPoints += 4;
+            numberOfRaces += 1;
         }else if (racePosition == 9){
-            numPoints += 2;
-            numRaces += 1;
+            numberOfPoints += 2;
+            numberOfRaces += 1;
         }else if (racePosition == 10){
-            numPoints += 1;
-            numRaces += 1;
+            numberOfPoints += 1;
+            numberOfRaces += 1;
         }else if (racePosition == 0){
-            numPoints += 0;
-            numRaces += 0;
+            numberOfPoints += 0;
+            numberOfRaces += 0;
         }else{
-            numPoints += 0;
-            numRaces += 1;
+            numberOfPoints += 0;
+            numberOfRaces += 1;
         }
     }
-    public void setFP(int x) {
-        numFirstPos += x;
-    }
-    public void setSP(int y) {
-        numSecondPos += y;
-    }
-    public void setTP(int z) {
-        numThirdPos += z;
-    }
+
     public void setNumPoint(int p) {
-        numPoints += p;
+        numberOfPoints += p;
     }
     public void setNumRaces(int r) {
-        numRaces += r;
+        numberOfRaces += r;
+    }
+
+    public void setFP(int x) {
+        numberOfFirstPositions += x;
+    }
+    public void setSP(int y) {
+        numberOfSecondPositions += y;
+    }
+    public void setTP(int z) {
+        numberOfThirdPositions += z;
     }
     
     // constructors
     public Formula1Driver(int NR, int NP, int NFP, int NSP, int NTP){
-        numRaces = NR;
-        numPoints = NP;
-        numFirstPos = NFP;
-        numSecondPos = NSP;
-        numThirdPos = NTP;
+        numberOfRaces = NR;
+        numberOfPoints = NP;
+        numberOfFirstPositions = NFP;
+        numberOfSecondPositions = NSP;
+        numberOfThirdPositions = NTP;
     }
 
     public Formula1Driver(int position){ // 1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
         racePosition = position;
         if (racePosition == 1){
-            numFirstPos +=1;
-            numPoints += 25;
-            numRaces += 1;
+            numberOfFirstPositions +=1;
+            numberOfPoints += 25;
+            numberOfRaces += 1;
         }else if (racePosition == 2){
-            numSecondPos += 1;
-            numPoints += 18;
-            numRaces += 1;
+            numberOfSecondPositions += 1;
+            numberOfPoints += 18;
+            numberOfRaces += 1;
         }else if (racePosition == 3){
-            numThirdPos +=1;
-            numPoints += 15;
-            numRaces += 1;
+            numberOfThirdPositions +=1;
+            numberOfPoints += 15;
+            numberOfRaces += 1;
         }else if (racePosition == 4){
-            numPoints += 12;
-            numRaces += 1;
+            numberOfPoints += 12;
+            numberOfRaces += 1;
         }else if (racePosition == 5){
-            numPoints += 10;
-            numRaces += 1;
+            numberOfPoints += 10;
+            numberOfRaces += 1;
         }else if (racePosition == 6){
-            numPoints += 8;
-            numRaces += 1;
+            numberOfPoints += 8;
+            numberOfRaces += 1;
         }else if (racePosition == 7){
-            numPoints += 6;
-            numRaces += 1;
+            numberOfPoints += 6;
+            numberOfRaces += 1;
         }else if (racePosition == 8){
-            numPoints += 4;
-            numRaces += 1;
+            numberOfPoints += 4;
+            numberOfRaces += 1;
         }else if (racePosition == 9){
-            numPoints += 2;
-            numRaces += 1;
+            numberOfPoints += 2;
+            numberOfRaces += 1;
         }else if (racePosition == 10){
-            numPoints += 1;
-            numRaces += 1;
+            numberOfPoints += 1;
+            numberOfRaces += 1;
         }else if (racePosition == 0){
-            numPoints += 0;
-            numRaces += 0;
+            numberOfPoints += 0;
+            numberOfRaces += 0;
         }else{
-            numPoints += 0;
-            numRaces += 1;
+            numberOfPoints += 0;
+            numberOfRaces += 1;
         }
-
     }
 
 }
