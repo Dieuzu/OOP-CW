@@ -2,9 +2,9 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Random;  
 //import javax.swing.table.*;
 //import javax.swing.event.*;
-import java.util.Random;  
 // import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ChampionshipManager extends Formula1ChampionshipManager{  
@@ -26,7 +26,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     // Create the main panel
     private JPanel mainPanel = new JPanel(new BorderLayout());
 
-    public static void main(String[] args) {  // MAIN Method for GUI part
+    public static void main(String[] args) {                // Main Method for GUI Part
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -41,11 +41,10 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     }
 
     public ChampionshipManager(String[] args){
-        String column[]={"Name","Team", "Location", "No of Races", "Total Points", "No of 1st","No of 2nd","No of 3rd"};
-        String columnR[]={"Race Name","Race Date"};
+        String column[]={"Name","Team", "Location", "No of Races", "Total Points", "No of 1st","No of 2nd","No of 3rd"}; // Driver stats Table Column
+        String columnR[]={"Race Name","Race Date"};                                                                      // Race stats Table Column
 
-        //GUI stuff STARTS here ==================================================================================================================================
-
+        //GUI stuff STARTS here ===============================================================================================================>
         //Table codes
         JTable StatTable = new JTable(GDData,column); // Driver Stats Table 
         StatTable.setBounds(30,40,1000,300);
@@ -89,10 +88,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );           //[      ]
         topInnerPanel.add(TxtArea,BorderLayout.CENTER );              //[      ]
 
-        //Adding $Text Area$ + the 2 Tables to the topPanel
+        //Adding Text Area + the 2 Tables to the topPanel
         topPanel.add(new JScrollPane(topInnerPanel), BorderLayout.WEST );
-
-        //topInnerPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // https://stackoverflow.com/questions/19973355/disable-horizontal-scrollbar-using-scrollpane
 
         topPanel.add(new JScrollPane(StatTable), BorderLayout.CENTER);
         topPanel.add(new JScrollPane(RaceTable),BorderLayout.EAST);
