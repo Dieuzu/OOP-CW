@@ -13,8 +13,9 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public static Driver[] RaceDriverBKP = new Driver[DriverCount];
 
-    public static String RaceName; 
-    public static String RaceDate;
+
+    // public static String RaceName; 
+    // public static String RaceDate;
 
     public static ArrayList<Integer> StartPositionTracker = new ArrayList<Integer>(); // keeps track of Starting position for each driver from race
     public static ArrayList<Integer> FinalPositionTracker = new ArrayList<Integer>(); // keeps track of Finish position for each driver from race
@@ -116,97 +117,16 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         randRace1button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if (RacesCount==MaxNumRaces){
-                    JOptionPane.showMessageDialog(null, "Cannot Create Anymore New Races Sorry! \nThe F1 Championship Season is Over!");
+                    ChampDecider();
+                    JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
                 }else {
-                    //Update the form
-                    int raceParticipant = 0;
-                    ArrayList<Integer> numbers = new ArrayList<Integer>(); // keep track position numbers of each driver from race
-
-                    RaceName = "Race " + String.valueOf(Racenum); //String <--------------- add this if u remove shyt top
-                    //String RaceDate;
-                    if (Racenum > 9){
-                        RaceDate = String.valueOf(Racenum) + "/12/21";
-                    }else{
-                        RaceDate = "0" + String.valueOf(Racenum) + "/12/21";
-                    }
-            
-                    for (int x = 0; x < MaxNumDrivers; x++) {  // generates random pos
-                        if (!RaceDriver[x].getDriverN().equals("E")) {
-                            Random racePosition = new Random();
-                            boolean Race = true;
-                            while (Race) {
-
-                                int random = racePosition.nextInt(DriverCount+1);
-                                if (!numbers.contains(random) && random !=0) {
-                                    numbers.add(random);
-                                    RaceDriver[x].getDriverS().setRP(random);
-
-                                    for (int y = 0; y < MaxNumRaces; y++) {
-                                        if (RaceDriver[x].getDRD(y).getRaceName().equals("NA")) {
-                                            RaceDriver[x].setDRD(y, new DRData(RaceName, RaceDate, random)); //seter + constructor
-                                            break;
-                                        }
-                                    }
-
-                                    raceParticipant++;
-                                    Race = false;
-                                }
-                            }    
-                        }
-                    }
-
-                    for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
-                        if (!RaceDriver[x].getDriverN().equals("E")) {
-                            String NoPoints;
-                            String Name = RaceDriver[x].getDriverN();
-                            String Team = RaceDriver[x].getDriverT().getTeamN();
-                            String Location = RaceDriver[x].getDriverL();
-                            String NoRace = String.valueOf(RaceDriver[x].getDriverS().getNumRaces());
-                            
-                            if (RaceDriver[x].getDriverS().getNumPoint() > 99){
-                                NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }else if (RaceDriver[x].getDriverS().getNumPoint() > 9) {
-                                NoPoints = "0"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }else{
-                                NoPoints = "00"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }
-
-                            String NoFP = String.valueOf(RaceDriver[x].getDriverS().getFP());
-                            String NoSP = String.valueOf(RaceDriver[x].getDriverS().getSP());
-                            String NoTP = String.valueOf(RaceDriver[x].getDriverS().getTP());
-                
-                            GDData[x][0] = Name;
-                            GDData[x][1] = Team;
-                            GDData[x][2] = Location;
-                            GDData[x][3] = NoRace;
-                            GDData[x][4] = NoPoints;
-                            GDData[x][5] = NoFP;
-                            GDData[x][6] = NoSP;
-                            GDData[x][7] = NoTP;
-                        }
-                    }
-
-
-                    for (int x = 0; x < MaxNumRaces; x++) {
-                        if (RaceF1[x].getMapN().equals("NA")) {
-                            RaceF1[x] = new Races(RaceName, RaceDate);
-                            RacesCount ++;
-                            JOptionPane.showMessageDialog(null,  "Added Data for : " + RaceF1[x].getMapN()+ " That took Place on " + RaceF1[x].getRaceD() + " With " + raceParticipant + " dirvers!");
-                            break;
-                        }
-                    }
+                    RandomStartP(0,TextFieldConsole);
+                    RaceStatsReAsigner(Racenum, 0); // Sends and updates the Data of each racer back to the main Array of Drivers 
+                    ResetRaceSPTandFPT(); // resets the Tempt data created for the race
+                    RefreshRDTableArray(GDData, GRData);
                     Racenum++;
-                    
-                    for (int x = 0; x < RacesCount; x++) {  // Stores all Race details line by line
-                        if (!RaceF1[x].getMapN().equals("NA")) {
-            
-                            String BkpName = RaceF1[x].getMapN();
-                            String BkpDate = RaceF1[x].getRaceD();
-                            GRData[x][0] = BkpName;
-                            GRData[x][1] = BkpDate;
-                        }
-                    }
 
                 }
                 StatTable.repaint(); //refreshes table
@@ -220,63 +140,15 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             public void actionPerformed(ActionEvent e){  
                 //TextFieldConsole.setText("[Generate a Random Race with %] Has Been Pressed");
                 if (RacesCount==MaxNumRaces){
-                    JOptionPane.showMessageDialog(null, "Cannot Create Anymore New Races Sorry! \nThe F1 Championship Season is Over!");
+                    ChampDecider();
+                    JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
                 }else {
-                    RandomStartP();  // Runs a function that Gives Start Postions Randomly for all registerd Drivers
+                    RandomStartP(1, TextFieldConsole);  // Runs a function that Gives Start Postions Randomly for all registerd Drivers
                     FinishPositions(TextFieldConsole);  // Runs a function that Generates Finish Positions for all Drivers based on the win % created from random Start Postions
-                    RaceStatsReAsigner(Racenum); // Sends and updates the Data of each racer back to the main Array of Drivers 
+                    RaceStatsReAsigner(Racenum, 1); // Sends and updates the Data of each racer back to the main Array of Drivers 
                     ResetRaceSPTandFPT(); // resets the Tempt data created for the race
-
-                    for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
-                        if (!RaceDriver[x].getDriverN().equals("E")) {
-                            String NoPoints;
-                            String Name = RaceDriver[x].getDriverN();
-                            String Team = RaceDriver[x].getDriverT().getTeamN();
-                            String Location = RaceDriver[x].getDriverL();
-                            String NoRace = String.valueOf(RaceDriver[x].getDriverS().getNumRaces());
-                            
-                            if (RaceDriver[x].getDriverS().getNumPoint() > 99){
-                                NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }else if (RaceDriver[x].getDriverS().getNumPoint() > 9) {
-                                NoPoints = "0"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }else{
-                                NoPoints = "00"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
-                            }
-
-                            String NoFP = String.valueOf(RaceDriver[x].getDriverS().getFP());
-                            String NoSP = String.valueOf(RaceDriver[x].getDriverS().getSP());
-                            String NoTP = String.valueOf(RaceDriver[x].getDriverS().getTP());
-                
-                            GDData[x][0] = Name;
-                            GDData[x][1] = Team;
-                            GDData[x][2] = Location;
-                            GDData[x][3] = NoRace;
-                            GDData[x][4] = NoPoints;
-                            GDData[x][5] = NoFP;
-                            GDData[x][6] = NoSP;
-                            GDData[x][7] = NoTP;
-                        }
-                    }
-
-                    for (int x = 0; x < MaxNumRaces; x++) {
-                        if (RaceF1[x].getMapN().equals("NA")) {
-                            RaceF1[x] = new Races(RaceName, RaceDate);
-                            RacesCount ++;
-                            JOptionPane.showMessageDialog(null,  "Added Data for : " + RaceF1[x].getMapN()+ " That took Place on " + RaceF1[x].getRaceD() + " With " + DriverCount + " dirvers! \n\n" + RaceStatMSG);
-                            break;
-                        }
-                    }
+                    RefreshRDTableArray(GDData, GRData);
                     Racenum++;
-                    
-                    for (int x = 0; x < RacesCount; x++) {  // Stores all Race details line by line
-                        if (!RaceF1[x].getMapN().equals("NA")) {
-            
-                            String BkpName = RaceF1[x].getMapN();
-                            String BkpDate = RaceF1[x].getRaceD();
-                            GRData[x][0] = BkpName;
-                            GRData[x][1] = BkpDate;
-                        }
-                    }
                 }
                 StatTable.repaint(); //refreshes table
                 RaceTable.repaint(); //refreshes table
@@ -333,7 +205,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     // Part 5 methods below =======================
     //Step 1.0
-    public static void RandomStartP() {
+    public static void RandomStartP(int Option, JTextField TextFieldConsole) {
+        RaceStatMSG = ""; 
         //System.out.print("Generating Starting postions For the Race : \n");
         for (int x = 0; x < MaxNumDrivers; x++){ //Adding Registerd drivers from the main Driver array as a backup to ensure no modifications to RaceDriver till the end of the race
             if (!RaceDriver[x].getDriverN().equals("E")) {
@@ -343,22 +216,52 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
 
         for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
-                Random raceSTARTposition = new Random();
-                boolean Race = true;
-                while (Race) {
-                    int randomStartPosition = raceSTARTposition.nextInt(DriverCount+1);
-                    if (!StartPositionTracker.contains(randomStartPosition) && randomStartPosition !=0) {
-                        StartPositionTracker.add(randomStartPosition);
+            Random raceSTARTposition = new Random();
+            boolean Race = true;
+            while (Race) {
+                int randomStartPosition = raceSTARTposition.nextInt(DriverCount+1);
+                if (!StartPositionTracker.contains(randomStartPosition) && randomStartPosition !=0) {
+                    StartPositionTracker.add(randomStartPosition);
+                    RaceDriverBKP[x].setStartP(randomStartPosition);
+
+                    if (Option == 1) {
                         double WinPercent = WinPercent(randomStartPosition);
-                        // System.out.print(RaceDriver[x] + " Started Race in Postion : " + random + "\nand has a " //UNCOMMENT ME FOR MORE INFO
-                        // + WinPercent*100  + "% chance of coming First place\n\n");                               //UNCOMMENT ME FOR MORE INFO
-                        RaceDriverBKP[x].setStartP(randomStartPosition);
                         RaceDriverBKP[x].setWinPercent(WinPercent);
-                        Race = false;
                     }
-                } 
-            //}
+                    //RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");
+                    Race = false;
+                }
+            } 
         }
+        
+        if (Option != 1) {
+            //bubble sort to arrange Drivers in order of race postions (using a temp Array of classes thats a clone of RaceDriver)
+            for(int x = 0; x < DriverCount; x++) { //final printing code
+                int winner = 1;
+
+                for (int i = 0; i < DriverCount-1; i++) {              //Bubble sort so order will be like : 1st , 2nd , 3rd,......last place
+                    for (int j = 0; j < DriverCount-1 - i; j++) {
+
+                        if (RaceDriverBKP[j].getStartP() > RaceDriverBKP[j + 1].getStartP()) {
+                            Driver Holder = RaceDriverBKP[j];
+                            RaceDriverBKP[j] = RaceDriverBKP[j + 1];
+                            RaceDriverBKP[j + 1] = Holder;
+                        }
+
+                    }
+                }
+
+                if (RaceDriverBKP[x].getStartP() == winner){  
+                    TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + "\nWon the Race!");
+                    RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race!\n\n");
+                    //System.out.print("\n"+RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n"); // console log msg
+                }else {
+                    //System.out.print(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");  // UNCOMMENT FOR DEMONSTRATION PURPOSES
+                    RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getStartP() +"\n");
+                } 
+            }
+        }
+
     }
 
     //Step 1.5
@@ -409,7 +312,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
             if (RaceDriverBKP[x].getFinishP() == winner){  
                 TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + "\nWon the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !");
-                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n");
+                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n\n");
                 //System.out.print("\n"+RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n"); // console log msg
             }else {
                 //System.out.print(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");  // UNCOMMENT FOR DEMONSTRATION PURPOSES
@@ -481,7 +384,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         FinalPositionTracker = new ArrayList<Integer>(); // Resets the Array List of Final postion Tracker for all drivers from LAST race
     }
 
-    public static void RaceStatsReAsigner(int Racenum){
+    public static void RaceStatsReAsigner(int Racenum, int Option){
         RaceName = "Race " + String.valueOf(Racenum); 
 
         if (Racenum > 9){
@@ -490,7 +393,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             RaceDate = "0" + String.valueOf(Racenum) + "/12/21";
         }
         
-
+        if (Option == 1){
             for (int x = 0; x < DriverCount; x++) {
                 for (int y = 0; y < MaxNumDrivers; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
@@ -510,6 +413,113 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                     }
                 }
             }
-
+        }else {
+            for (int x = 0; x < DriverCount; x++) {
+                for (int y = 0; y < MaxNumDrivers; y++) {
+                    if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
+                        //System.out.print("\n Found a Match for "+ RaceDriverBKP[x].getDriverN());
+    
+                        RaceDriver[y].getDriverS().setRP((RaceDriverBKP[x].getStartP()));
+                        
+                        //System.out.print("\n Updated Stats for "+ RaceDriverBKP[x].getDriverN());
+    
+                        for (int z = 0; z < MaxNumRaces; z++) {
+                            if (RaceDriver[y].getDRD(z).getRaceName().equals("NA")) {
+                                RaceDriver[y].setDRD(z, new DRData(RaceName, RaceDate, RaceDriverBKP[x].getStartP())); //seter + constructor
+                                //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    // refresh table
+    public static void RefreshRDTableArray(String GDData[][], String GRData[][]){
+        for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
+            if (!RaceDriver[x].getDriverN().equals("E")) {
+                String NoPoints;
+                String Name = RaceDriver[x].getDriverN();
+                String Team = RaceDriver[x].getDriverT().getTeamN();
+                String Location = RaceDriver[x].getDriverL();
+                String NoRace = String.valueOf(RaceDriver[x].getDriverS().getNumRaces());
+                
+                if (RaceDriver[x].getDriverS().getNumPoint() > 99){
+                    NoPoints = String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }else if (RaceDriver[x].getDriverS().getNumPoint() > 9) {
+                    NoPoints = "0"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }else{
+                    NoPoints = "00"+String.valueOf(RaceDriver[x].getDriverS().getNumPoint());
+                }
+
+                String NoFP = String.valueOf(RaceDriver[x].getDriverS().getFP());
+                String NoSP = String.valueOf(RaceDriver[x].getDriverS().getSP());
+                String NoTP = String.valueOf(RaceDriver[x].getDriverS().getTP());
+    
+                GDData[x][0] = Name;
+                GDData[x][1] = Team;
+                GDData[x][2] = Location;
+                GDData[x][3] = NoRace;
+                GDData[x][4] = NoPoints;
+                GDData[x][5] = NoFP;
+                GDData[x][6] = NoSP;
+                GDData[x][7] = NoTP;
+            }
+        }
+
+        for (int x = 0; x < MaxNumRaces; x++) {
+            if (RaceF1[x].getMapN().equals("NA")) {
+                RaceF1[x] = new Races(RaceName, RaceDate);
+                RacesCount ++;
+                JOptionPane.showMessageDialog(null,  "Added Data for : " + RaceF1[x].getMapN()+ " That took Place on " + RaceF1[x].getRaceD() + " With " + DriverCount + " dirvers! \n\n" + RaceStatMSG);
+                break;
+            }
+        }
+        
+        for (int x = 0; x < RacesCount; x++) {  // Stores all Race details line by line
+            if (!RaceF1[x].getMapN().equals("NA")) {
+
+                String BkpName = RaceF1[x].getMapN();
+                String BkpDate = RaceF1[x].getRaceD();
+                GRData[x][0] = BkpName;
+                GRData[x][1] = BkpDate;
+            }
+        }
+    }
+
+    //
+    public static void ChampDecider(){
+        Driver[] CloneRaceDriver = new Driver[MaxNumDrivers]; // cloning Driver array as a backup to ensure no sorted change is permanant
+        for (int x = 0; x < MaxNumDrivers; x++) {
+            CloneRaceDriver[x] = RaceDriver[x];
+        }
+
+        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < MaxNumDrivers-1 - x; y++) {
+                if (CloneRaceDriver[y].getDriverS().getNumPoint() < CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
+                    Driver Holder = CloneRaceDriver[y];
+                    CloneRaceDriver[y] = CloneRaceDriver[y + 1];
+                    CloneRaceDriver[y + 1] = Holder;
+                }
+            }
+        }
+
+        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < MaxNumDrivers -1 - x; y++) {
+                if (CloneRaceDriver[y].getDriverS().getNumPoint() == CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
+                    if (CloneRaceDriver[y].getDriverS().getFP() < CloneRaceDriver[y + 1].getDriverS().getFP()) {
+                        Driver Holder = CloneRaceDriver[y];
+                        CloneRaceDriver[y] = CloneRaceDriver[y + 1];
+                        CloneRaceDriver[y + 1] = Holder;
+                    }
+                }
+            }
+        }
+        F1SeasonChampion = CloneRaceDriver[0].getDriverN();
+    }
+        
+
+
 }
