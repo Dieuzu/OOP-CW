@@ -13,10 +13,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
     public static Driver[] RaceDriverBKP = new Driver[DriverCount];
 
-
-    // public static String RaceName; 
-    // public static String RaceDate;
-
     public static ArrayList<Integer> StartPositionTracker = new ArrayList<Integer>(); // keeps track of Starting position for each driver from race
     public static ArrayList<Integer> FinalPositionTracker = new ArrayList<Integer>(); // keeps track of Finish position for each driver from race
     //public int Racenum = 1;
@@ -121,6 +117,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 if (RacesCount==MaxNumRaces){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
+                }else if (DriverCount == 0 || DriverCount == 1 ) {
+                    JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
                     RandomStartP(0,TextFieldConsole);
                     RaceStatsReAsigner(Racenum, 0); // Sends and updates the Data of each racer back to the main Array of Drivers 
@@ -142,6 +140,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 if (RacesCount==MaxNumRaces){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
+                }else if (DriverCount == 0 || DriverCount == 1 ) {
+                    JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
                     RandomStartP(1, TextFieldConsole);  // Runs a function that Gives Start Postions Randomly for all registerd Drivers
                     FinishPositions(TextFieldConsole);  // Runs a function that Generates Finish Positions for all Drivers based on the win % created from random Start Postions
