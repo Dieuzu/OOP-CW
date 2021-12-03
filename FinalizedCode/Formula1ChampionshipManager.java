@@ -199,13 +199,15 @@ public class Formula1ChampionshipManager{
         for (int x = 0; x < RaceDriver.length; x++) {
             if (RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam), new Formula1Driver(DPos));
+                RaceDriver[x].DriverRaceInit(); 
                 
-                //RaceDriver[x].DriverRaceInit(); // add stuff to add race data
+                // add stuff to add race data
                 for (int z = 0; z < RaceF1.length; z++) {
                     if (RaceDriver[x].getDRD(z).getRaceName().equals("NA")) {
                         RaceDriver[x].setDRD(z, new DRData(RN, RD, DPos)); //seter + constructor
-                        //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
                         break;
+                    }else{
+                        System.out.print("\nWEIRDO ERROR!" );
                     }
                 }
                 DriverCount += 1;
@@ -313,7 +315,7 @@ public class Formula1ChampionshipManager{
             System.out.print("\nEnter the S.No of the Driver Whose Stats you wish to see : ");
             int Sindex = Integer.parseInt(input.nextLine());
 
-            if (Sindex >= DriverCount || Sindex < 0) {
+            if (Sindex >= RaceDriver.length || Sindex < 0) {
                 System.out.print("\nThe entered S.No is Out of Range!: \n");
                 continue;
             }else {

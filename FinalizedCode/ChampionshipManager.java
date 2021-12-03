@@ -117,6 +117,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 if (RacesCount==RaceF1.length){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
+                    TextFieldConsole.setText("The F1 Championship Season is Over! " + F1SeasonChampion + " Emerged as the Final Champion! \n ");
                 }else if (DriverCount == 0 || DriverCount == 1 ) {
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
@@ -140,6 +141,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 if (RacesCount==RaceF1.length){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
+                    TextFieldConsole.setText("The F1 Championship Season is Over! " + F1SeasonChampion + " Emerged as the Final Champion! \n ");
                 }else if (DriverCount == 0 || DriverCount == 1 ) {
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
@@ -519,7 +521,5 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
         F1SeasonChampion = CloneRaceDriver[0].getDriverN();
     }
-        
-
 
 }
