@@ -11,7 +11,7 @@ public class Formula1ChampionshipManager{
 
     //Manupilate all max number of drivers and races with following variables
     public static final int MaxNumDrivers = 16;
-    public static final int MaxNumRaces = 10;
+    public static final int MaxNumRaces = 20;
 
     //Winner of entire season 
     public static String F1SeasonChampion;
@@ -31,13 +31,13 @@ public class Formula1ChampionshipManager{
 
     public static void main(String[] args) { // MAIN METHOD! with Initializations + MenuFunction Call
 
-        for (int x = 0; x < MaxNumDrivers; x++) {//initializing the Driver type array with all data set to empty
+        for (int x = 0; x < RaceDriver.length; x++) {//initializing the Driver type array with all data set to empty
             RaceDriver[x] = new Driver("E", "E", new Team("E"), new Formula1Driver(0));
             RaceDriver[x].DriverRaceInit();
         }    
-        for (int y = 0; y < MaxNumRaces; y++) //initializing the races type array with all data set to empty
+        for (int y = 0; y < RaceF1.length; y++){ //initializing the races type array with all data set to empty
             RaceF1[y] = new Races("NA", "NA");
-
+        }
 
         LoadPrgrmData(); // Loads all save data on Start!
         PrintMenu(args); // loads the menu for User
@@ -95,6 +95,8 @@ public class Formula1ChampionshipManager{
                 SaveData();
                 System.out.print("\nThank you For Trying the Application!\n");
                 MenuCheck = false;
+            } else if (userInput.equalsIgnoreCase("Reset")) {
+                BDDataWipe(input);
             } else {
                 System.out.print("\nThe entered input is Invalid!\n");
             }
@@ -103,7 +105,7 @@ public class Formula1ChampionshipManager{
 
     //1. Add Driver Function
     public static void AddDriver(Scanner input) {
-        if (DriverCount==MaxNumDrivers){
+        if (DriverCount==RaceDriver.length){
             System.out.print("Sorry the F1 Championship Roster is Full and No new Drivers Can be Added!\n");
             return;
         }
@@ -122,7 +124,56 @@ public class Formula1ChampionshipManager{
             ErrorCount=0;
             System.out.print("Enter Drivers Team : ");
             DTeam = input.nextLine(); 
-            for (int i =0; i<MaxNumDrivers; i++){
+            for (int i =0; i<RaceDriver.length; i++){
+                if (RaceDriver[i].getDriverT().getTeamN().toLowerCase().equals(DTeam.toLowerCase())){
+                    ErrorCount ++;
+                }
+            }
+            if (ErrorCount>0){
+                System.out.print("This team Already has a Driver! Pls try again...\n\n");
+            }
+            else{
+                TeamCheck = false;
+            } 
+        }
+
+        //add the data to free slot in Array of classes
+        for (int x = 0; x < RaceDriver.length; x++) {
+            if (RaceDriver[x].getDriverN().equals("E")) {
+                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam), new Formula1Driver(DPos));
+                RaceDriver[x].DriverRaceInit();
+                DriverCount += 1;
+                System.out.print("\nAdded Data for Driver : " + RaceDriver[x].getDriverN() 
+                + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
+                + " From " + RaceDriver[x].getDriverL() 
+                +"!");        
+                break;
+            }
+        }
+    }
+
+    //Method Overloading of Add Driver Function
+    public static void AddDriver(Scanner input, String RN, String RD) {
+        if (DriverCount==RaceDriver.length){
+            System.out.print("Sorry the F1 Championship Roster is Full and No new Drivers Can be Added!\n");
+            return;
+        }
+        int DPos = 0;
+        int ErrorCount = 0;
+        String DTeam = "E";
+        System.out.print("\nEnter Driver's Name : ");
+        String DName = input.nextLine(); 
+        System.out.print("Enter Drivers Location : ");
+        String DLocation = input.nextLine();
+        
+        
+        // Unique Team Checker
+        Boolean TeamCheck = true;
+        while(TeamCheck){
+            ErrorCount=0;
+            System.out.print("Enter Drivers Team : ");
+            DTeam = input.nextLine(); 
+            for (int i =0; i<RaceDriver.length; i++){
                 if (RaceDriver[i].getDriverT().getTeamN().toLowerCase().equals(DTeam.toLowerCase())){
                     ErrorCount ++;
                 }
@@ -137,41 +188,43 @@ public class Formula1ChampionshipManager{
 
         Boolean PositionChecker = true;
         while (PositionChecker) { 
-            System.out.print("Enter Driver Position in Race [or 0 if not Participated in any Race] : ");
+            System.out.print("Enter Driver Position in Race : ");
             DPos = Integer.parseInt(input.nextLine());
-            if (DPos < 0 || DPos > MaxNumDrivers){
-                System.out.print("Pls Enter a Valid Position between 1-" +MaxNumDrivers+"\n");
+            if (DPos < 0 || DPos > RaceDriver.length){
+                System.out.print("Pls Enter a Valid Position between 1-" +RaceDriver.length+"\n");
             }else {
                 PositionChecker = false;
             }
         }   
-        for (int x = 0; x < MaxNumDrivers; x++) {
+        for (int x = 0; x < RaceDriver.length; x++) {
             if (RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam), new Formula1Driver(DPos));
-                RaceDriver[x].DriverRaceInit();
-                DriverCount += 1;
-                if (DPos == 0){
-                    System.out.print("\nAdded Data for Driver : " + RaceDriver[x].getDriverN() 
-                    + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
-                    + " From " + RaceDriver[x].getDriverL() 
-                    + "\n                       ↳ No Additional Stats Added For "+ RaceDriver[x].getDriverN()+"!");        
-                    break;
-
-                }else{
-                    System.out.print("\nAdded Data for Driver : " + RaceDriver[x].getDriverN() 
-                    + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
-                    + " From " + RaceDriver[x].getDriverL() 
-                    + " who came in position " + RaceDriver[x].getDriverS().getRP() 
-                    + " with a total points of " + RaceDriver[x].getDriverS().getNumPoint());        
-                    break;
+                
+                //RaceDriver[x].DriverRaceInit(); // add stuff to add race data
+                for (int z = 0; z < RaceF1.length; z++) {
+                    if (RaceDriver[x].getDRD(z).getRaceName().equals("NA")) {
+                        RaceDriver[x].setDRD(z, new DRData(RN, RD, DPos)); //seter + constructor
+                        //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
+                        break;
+                    }
                 }
+                DriverCount += 1;
+
+                System.out.print("\nAdded Data for Driver : " + RaceDriver[x].getDriverN() 
+                + " in Team "+ RaceDriver[x].getDriverT().getTeamN()  
+                + " From " + RaceDriver[x].getDriverL() 
+                + " who came in position " + RaceDriver[x].getDriverS().getRP() 
+                + " in the Race : " + RN + " that was held on " + RD
+                + " with a total points of " + RaceDriver[x].getDriverS().getNumPoint());        
+                break;
+
             }
         }
     }
 
     //1.5 Resubmit Add Driver function
     public static void Resubmit(Scanner input){
-        if (DriverCount==MaxNumDrivers){
+        if (DriverCount==RaceDriver.length){
             return;
         }
         Boolean Resubmit = true;
@@ -222,7 +275,7 @@ public class Formula1ChampionshipManager{
             return;
         }
         System.out.print("\nCurrently Participating Teams : ");
-        for (int i =0; i<MaxNumDrivers; i++){
+        for (int i =0; i<RaceDriver.length; i++){
             if (!RaceDriver[i].getDriverN().equals("E")){
                 System.out.print("\n SNo " + i + " : Team "+ RaceDriver[i].getDriverT().getTeamN() );
             }  
@@ -282,13 +335,13 @@ public class Formula1ChampionshipManager{
 
     //5. Display table of drivers ! 
     public static void DisplayDRVRStats(Scanner input){
-        Driver[] CloneRaceDriver = new Driver[MaxNumDrivers]; // cloning Driver array as a backup to ensure no sorted change is permanant
-        for (int x = 0; x < MaxNumDrivers; x++) {
+        Driver[] CloneRaceDriver = new Driver[RaceDriver.length]; // cloning Driver array as a backup to ensure no sorted change is permanant
+        for (int x = 0; x < RaceDriver.length; x++) {
             CloneRaceDriver[x] = RaceDriver[x];
         }
 
-        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
-            for (int y = 0; y < MaxNumDrivers-1 - x; y++) {
+        for (int x = 0; x < RaceDriver.length-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < RaceDriver.length-1 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() < CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
                     Driver Holder = CloneRaceDriver[y];
                     CloneRaceDriver[y] = CloneRaceDriver[y + 1];
@@ -297,8 +350,8 @@ public class Formula1ChampionshipManager{
             }
         }
 
-        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
-            for (int y = 0; y < MaxNumDrivers -1 - x; y++) {
+        for (int x = 0; x < RaceDriver.length-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < RaceDriver.length -1 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() == CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
                     if (CloneRaceDriver[y].getDriverS().getFP() < CloneRaceDriver[y + 1].getDriverS().getFP()) {
                         Driver Holder = CloneRaceDriver[y];
@@ -316,7 +369,7 @@ public class Formula1ChampionshipManager{
         System.out.print("\n| Rank |    Driver Name     |       Team       |  Number of Races  |  Total Points  | No. of 1st Place Wins |");
         System.out.print("\n+------+--------------------+------------------+-------------------+----------------+-----------------------+");
         //some code Driver
-        for (int x = 0; x < MaxNumDrivers; x++) {
+        for (int x = 0; x < RaceDriver.length; x++) {
             if (!CloneRaceDriver[x].getDriverN().equals("E")) {
                 System.out.printf(TableFormat, x+1, CloneRaceDriver[x].getDriverN(), CloneRaceDriver[x].getDriverT().getTeamN(), CloneRaceDriver[x].getDriverS().getNumRaces(), CloneRaceDriver[x].getDriverS().getNumPoint(), CloneRaceDriver[x].getDriverS().getFP());
             }
@@ -326,7 +379,7 @@ public class Formula1ChampionshipManager{
     
     //6.Add a Race Function 
     public static void AddRace(Scanner input){
-        if (RacesCount==MaxNumRaces){
+        if (RacesCount==RaceF1.length){
             ChampionshipManager.ChampDecider();
             System.out.print("Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
         }else if (DriverCount == 0 || DriverCount == 1 ) {
@@ -360,7 +413,7 @@ public class Formula1ChampionshipManager{
                         int NPos = Integer.parseInt(input.nextLine());
                         RaceDriver[SNo].getDriverS().setRP(NPos);
 
-                        for (int z = 0; z < MaxNumRaces; z++) {
+                        for (int z = 0; z < RaceF1.length; z++) {
                             if (RaceDriver[SNo].getDRD(z).getRaceName().equals("NA")) {
                                 RaceDriver[SNo].setDRD(z, new DRData(RaceName, RaceDate, NPos)); //seter + constructor
                                 break;
@@ -378,21 +431,21 @@ public class Formula1ChampionshipManager{
                 }
             }
 
-            // boolean RaceNEWDriverAdd = true;
-            // while (RaceNEWDriverAdd){
-            //     System.out.print("\nDo you wish to Add a NEW Driver to this Race ?(yes/y/no/n) : ");
-            //     String AddUI = input.nextLine(); 
-            //     if (AddUI.equals("yes") || AddUI.equals("y")){
-            //         AddDriver(input);
-            //         raceParticipant ++;
-            //     }else if (AddUI.equals("no") || AddUI.equals("n")){
-            //         RaceNEWDriverAdd = false;
-            //     }else{
-            //         System.out.print("\nPls Enter a Valid Answer!");
-            //     }
-            // }
+            boolean RaceNEWDriverAdd = true;
+            while (RaceNEWDriverAdd){
+                System.out.print("\nDo you wish to Add a NEW Driver to this Race ?(yes/y/no/n) : ");
+                String AddUI = input.nextLine(); 
+                if (AddUI.equals("yes") || AddUI.equals("y")){
+                    AddDriver(input, RaceName, RaceDate);
+                    raceParticipant ++;
+                }else if (AddUI.equals("no") || AddUI.equals("n")){
+                    RaceNEWDriverAdd = false;
+                }else{
+                    System.out.print("\nPls Enter a Valid Answer!");
+                }
+            }
             
-            for (int x = 0; x < MaxNumRaces; x++) {
+            for (int x = 0; x < RaceF1.length; x++) {
                 if (RaceF1[x].getMapN().equals("NA")) {
                     RaceF1[x] = new Races(RaceName, RaceDate);
                     RacesCount += 1;
@@ -411,7 +464,7 @@ public class Formula1ChampionshipManager{
         try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Drivers.txt"))) { // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
             bkp.write(String.valueOf(DriverCount));  // Stores number of drivers in first line
             bkp.newLine();
-            for (int x = 0; x < MaxNumDrivers; x++) {        // Stores all driver details line by line
+            for (int x = 0; x < RaceDriver.length; x++) {        // Stores all driver details line by line
                 bkp.write(RaceDriver[x].getDriverN());
                 bkp.newLine();
                 bkp.write(RaceDriver[x].getDriverT().getTeamN());
@@ -431,7 +484,7 @@ public class Formula1ChampionshipManager{
                 // System.out.print("\nDriver part 1 Done Properly for"+RaceDriver[x].getDriverN()+ "!\n");
 
                 // Experimental ----
-                for (int y = 0; y < MaxNumRaces; y++){
+                for (int y = 0; y < RaceF1.length; y++){ // RaceF1.length
                     bkp.write(RaceDriver[x].getDRD(y).getRaceName());   // Race name
                     bkp.newLine();
                     bkp.write(RaceDriver[x].getDRD(y).getRaceDate());              // Race Date
@@ -452,7 +505,7 @@ public class Formula1ChampionshipManager{
         try (BufferedWriter bkp = new BufferedWriter(new FileWriter("Races.txt"))) {
             bkp.write(String.valueOf(RacesCount));  // Stores number of Races in first line
             bkp.newLine();
-            for (int x = 0; x < MaxNumRaces; x++) {        // Stores all Race details line by line
+            for (int x = 0; x < RaceF1.length; x++) {        // Stores all Race details line by line
                 bkp.write(RaceF1[x].getMapN());
                 bkp.newLine();
                 bkp.write(RaceF1[x].getRaceD());
@@ -476,7 +529,7 @@ public class Formula1ChampionshipManager{
         System.out.print("\n| S.No |    Driver Name     |       Team       |");
         System.out.print("\n+------+--------------------+------------------+");
         
-        for (int x = 0; x < MaxNumDrivers; x++) {
+        for (int x = 0; x < RaceDriver.length; x++) {
             if (!RaceDriver[x].getDriverN().equals("E")) {
                 System.out.printf(TableFormat, x, RaceDriver[x].getDriverN(), RaceDriver[x].getDriverT().getTeamN());
                 //backup Counter Fixer
@@ -510,7 +563,7 @@ public class Formula1ChampionshipManager{
         try {
             Scanner Loader = new Scanner(new FileInputStream("Drivers.txt"));  // taken from here : https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
             DriverCount = Integer.parseInt(Loader.nextLine());
-            for (int x = 0; x < MaxNumDrivers; x++) {
+            for (int x = 0; x < RaceDriver.length; x++) {
                 
                 String DName =Loader.nextLine(); 
                 String DTeam = Loader.nextLine(); 
@@ -523,10 +576,10 @@ public class Formula1ChampionshipManager{
                 int SPnum = Integer.parseInt(Loader.nextLine()); 
                 int TPnum = Integer.parseInt(Loader.nextLine()); 
 
-                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam)); // this running an exclusive overloaded constructor
+                RaceDriver[x] = new Driver(DName, DLocation, new Team(DTeam));                  // this running an exclusive overloaded constructor
                 RaceDriver[x].setDriverS(new Formula1Driver(Rnum, Pnum, FPnum, SPnum, TPnum)); // this running an exclusive overloaded constructor
                 // Experimental ----
-                for (int y = 0; y < MaxNumRaces; y++){
+                for (int y = 0; y < RaceF1.length; y++){
 
                     String RaceName = Loader.nextLine(); 
                     String RaceDate = Loader.nextLine(); 
@@ -538,13 +591,13 @@ public class Formula1ChampionshipManager{
                 DiverSaveCheck = true;
             }
         } catch (IOException e) {
-           // e.printStackTrace();
+          // e.printStackTrace();
         }
 
         try {
             Scanner Loader = new Scanner(new FileInputStream("Races.txt"));
             RacesCount = Integer.parseInt(Loader.nextLine());
-            for (int x = 0; x < MaxNumRaces; x++) {
+            for (int x = 0; x < RaceF1.length; x++) {
                 
                 String RMName = Loader.nextLine(); 
                 String RMDate = Loader.nextLine(); 
@@ -553,7 +606,7 @@ public class Formula1ChampionshipManager{
                 RaceSaveCheck = true;
             }
         } catch (IOException e) {
-            //e.printStackTrace();
+           // e.printStackTrace();
         }
 
         if (DiverSaveCheck && RaceSaveCheck) {
@@ -606,7 +659,7 @@ public class Formula1ChampionshipManager{
 
     //experimental Race table drawer
     public static String[][] GrabRaceData() {
-        String GRData[][] = new String[MaxNumRaces][2];
+        String GRData[][] = new String[RaceF1.length][2];
 
         for (int x = 0; x < RacesCount; x++) {  // Stores all Race details line by line
             if (!RaceF1[x].getMapN().equals("NA")) {
@@ -621,6 +674,36 @@ public class Formula1ChampionshipManager{
             }
         }
         return GRData;
+    }
+
+    //Dev Data Resetter For testing 
+    public static void BDDataWipe(Scanner input) {
+        System.out.print("\nSucessfully Enterd The Secret Developer Reset Method!\n");
+
+        System.out.print("\n|Enter 'Delete' to Wipe all Race Data of All Drivers \n|Enter Input : ");
+        String ResetResponse = input.nextLine(); 
+
+        if (ResetResponse.equals("Delete")){
+            for (int x = 0; x < RaceDriver.length; x++) {//Re setting the Driver type array with all race data set to empty
+                int ResetNum = 0;
+
+                RaceDriver[x].setDriverS(new Formula1Driver(ResetNum, ResetNum, ResetNum, ResetNum, ResetNum));
+                RaceDriver[x].DriverRaceInit();
+            }    
+            for (int y = 0; y < RaceF1.length; y++){ //Re-initializing the races type array with all data set to empty
+                RaceF1[y] = new Races("NA", "NA");
+            }
+            RacesCount =0;
+            Racenum = 1;
+
+            System.out.print("\n          ,-------,     ");
+            System.out.print("\n       ,--'-----:---`--,  ");
+            System.out.print("\n      ==(o)-------(o)==J  ");
+            System.out.print("\n``````````````````````````````");
+            System.out.print("\nSucessfully Reset All Drivers Race Data!");
+        }else{
+            System.out.print("\nPls Enter a Valid Answer!");
+        }
     }
 
 }

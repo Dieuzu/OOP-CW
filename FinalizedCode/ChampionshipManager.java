@@ -114,7 +114,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (RacesCount==MaxNumRaces){
+                if (RacesCount==RaceF1.length){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
                 }else if (DriverCount == 0 || DriverCount == 1 ) {
@@ -137,7 +137,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         randRace2button.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
                 //TextFieldConsole.setText("[Generate a Random Race with %] Has Been Pressed");
-                if (RacesCount==MaxNumRaces){
+                if (RacesCount==RaceF1.length){
                     ChampDecider();
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nThe F1 Championship Season is Over!\n\n" + F1SeasonChampion + " Emerged as the Final Champion! \n " );
                 }else if (DriverCount == 0 || DriverCount == 1 ) {
@@ -164,11 +164,11 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 driverNameR = TextFieldConsole.getText();
                 String RaceStats = "";
                 // Step 1: check for the name of the driver
-                for (int i = 0; i < MaxNumDrivers;i++){
-                    if (RaceDriver[i].getDriverN().equals(driverNameR)) {
-                        TextFieldConsole.setText(driverNameR + " Is a Regiserd Driver in this Season of F1 Championship!        |        Loading All Race Data...");
+                for (int i = 0; i < RaceDriver.length;i++){
+                    if (RaceDriver[i].getDriverN().equalsIgnoreCase(driverNameR)) {
+                        TextFieldConsole.setText("Loading All "+RaceDriver[i].getDriverN()+" Formula 1 Season Race Data...");
                         //step 2 get the stats and start concatenation
-                        for(int j = 0; j < MaxNumRaces; j++){
+                        for(int j = 0; j < RaceF1.length; j++){
                             if (!RaceDriver[i].getDRD(j).getRaceName().equals("NA")){
                                 String RN = RaceDriver[i].getDRD(j).getRaceName();
                                 String RT = RaceDriver[i].getDRD(j).getRaceDate();
@@ -179,16 +179,16 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                                 RaceStats = RaceStats.concat(RN +" - ("+ RT +") :\nPosition : " + RP + "\n\n");
                             }
                         }
+                        RaceDetesLF.setText(RaceDriver[i].getDriverN()+ " Race Data :   ");  
                         break;
                     }else {
                         TextFieldConsole.setText(driverNameR + " Is not a Regiserd Driver in this Season of F1 Championship!");
                     }
                 }
-                RaceDetesLF.setText(driverNameR+ " Race Data :   ");  
+                
                 TxtArea.setText(RaceStats);
             }  
-        }); 
-
+        });
         //action wen [randRace2button] button is clicked.
         clearbutton.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
@@ -208,7 +208,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
     public static void RandomStartP(int Option, JTextField TextFieldConsole) {
         RaceStatMSG = ""; 
         //System.out.print("Generating Starting postions For the Race : \n");
-        for (int x = 0; x < MaxNumDrivers; x++){ //Adding Registerd drivers from the main Driver array as a backup to ensure no modifications to RaceDriver till the end of the race
+        for (int x = 0; x < RaceDriver.length; x++){ //Adding Registerd drivers from the main Driver array as a backup to ensure no modifications to RaceDriver till the end of the race
             if (!RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriverBKP[x] = RaceDriver[x];
                 //System.out.print("\n Registerd : "+RaceDriver[x].getDriverN());
@@ -395,7 +395,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         
         if (Option == 1){
             for (int x = 0; x < DriverCount; x++) {
-                for (int y = 0; y < MaxNumDrivers; y++) {
+                for (int y = 0; y < RaceDriver.length; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
                         //System.out.print("\n Found a Match for "+ RaceDriverBKP[x].getDriverN());
     
@@ -403,7 +403,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                         
                         //System.out.print("\n Updated Stats for "+ RaceDriverBKP[x].getDriverN());
     
-                        for (int z = 0; z < MaxNumRaces; z++) {
+                        for (int z = 0; z < RaceF1.length; z++) {
                             if (RaceDriver[y].getDRD(z).getRaceName().equals("NA")) {
                                 RaceDriver[y].setDRD(z, new DRData(RaceName, RaceDate, RaceDriverBKP[x].getFinishP())); //seter + constructor
                                 //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
@@ -415,7 +415,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             }
         }else {
             for (int x = 0; x < DriverCount; x++) {
-                for (int y = 0; y < MaxNumDrivers; y++) {
+                for (int y = 0; y < RaceDriver.length; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
                         //System.out.print("\n Found a Match for "+ RaceDriverBKP[x].getDriverN());
     
@@ -423,7 +423,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                         
                         //System.out.print("\n Updated Stats for "+ RaceDriverBKP[x].getDriverN());
     
-                        for (int z = 0; z < MaxNumRaces; z++) {
+                        for (int z = 0; z < RaceF1.length; z++) {
                             if (RaceDriver[y].getDRD(z).getRaceName().equals("NA")) {
                                 RaceDriver[y].setDRD(z, new DRData(RaceName, RaceDate, RaceDriverBKP[x].getStartP())); //seter + constructor
                                 //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
@@ -469,7 +469,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             }
         }
 
-        for (int x = 0; x < MaxNumRaces; x++) {
+        for (int x = 0; x < RaceF1.length; x++) {
             if (RaceF1[x].getMapN().equals("NA")) {
                 RaceF1[x] = new Races(RaceName, RaceDate);
                 RacesCount ++;
@@ -491,13 +491,13 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     //
     public static void ChampDecider(){
-        Driver[] CloneRaceDriver = new Driver[MaxNumDrivers]; // cloning Driver array as a backup to ensure no sorted change is permanant
-        for (int x = 0; x < MaxNumDrivers; x++) {
+        Driver[] CloneRaceDriver = new Driver[RaceDriver.length]; // cloning Driver array as a backup to ensure no sorted change is permanant
+        for (int x = 0; x < RaceDriver.length; x++) {
             CloneRaceDriver[x] = RaceDriver[x];
         }
 
-        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
-            for (int y = 0; y < MaxNumDrivers-1 - x; y++) {
+        for (int x = 0; x < RaceDriver.length-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < RaceDriver.length-1 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() < CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
                     Driver Holder = CloneRaceDriver[y];
                     CloneRaceDriver[y] = CloneRaceDriver[y + 1];
@@ -506,8 +506,8 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             }
         }
 
-        for (int x = 0; x < MaxNumDrivers-1; x++) {              //Bubble sort technique
-            for (int y = 0; y < MaxNumDrivers -1 - x; y++) {
+        for (int x = 0; x < RaceDriver.length-1; x++) {              //Bubble sort technique
+            for (int y = 0; y < RaceDriver.length -1 - x; y++) {
                 if (CloneRaceDriver[y].getDriverS().getNumPoint() == CloneRaceDriver[y + 1].getDriverS().getNumPoint()) {
                     if (CloneRaceDriver[y].getDriverS().getFP() < CloneRaceDriver[y + 1].getDriverS().getFP()) {
                         Driver Holder = CloneRaceDriver[y];

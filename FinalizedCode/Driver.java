@@ -11,7 +11,7 @@ public class Driver {
     private double winPercentPerDriver;
 
     //An array holding data of all races and dates and positions for driver Class
-    private DRData driverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumDrivers];
+    private DRData driverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumRaces];
 
     //Getters 
     public String getDriverN() {
@@ -73,7 +73,7 @@ public class Driver {
     // Memember function to initialize the Array that holds all records of the driver object in all races he participate
     public void DriverRaceInit(){
 
-        for (int y = 0; y < Formula1ChampionshipManager.MaxNumRaces; y++) {
+        for (int y = 0; y < driverRaceData.length; y++) {
             driverRaceData[y] = new DRData("NA", "NA", 0);//initializing the races type array with all data set to Default
         }
         return;
