@@ -315,10 +315,10 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             if (RaceDriverBKP[x].getFinishP() == winner){  
                 TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + "\nWon the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !");
                 RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n\n");
-                //System.out.print("\n"+RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n"); // console log msg
             }else {
-                //System.out.print(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");  // UNCOMMENT FOR DEMONSTRATION PURPOSES
-                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");
+                RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() 
+                //+"\n=>They Started the Race in Postion " + RaceDriverBKP[x].getStartP() + " And had a " + RaceDriverBKP[x].getWinPercent()*100 + "% of winning.\n" // UNCOMMENT FOR DEMONSTRATION PURPOSES
+                +"\n");
             } 
         }
     }
@@ -395,40 +395,30 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             RaceDate = "0" + String.valueOf(Racenum) + "/12/21";
         }
         
-        if (Option == 1){
+        if (Option == 1){ // this option is for % Randomizer code
             for (int x = 0; x < DriverCount; x++) {
                 for (int y = 0; y < RaceDriver.length; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
-                        //System.out.print("\n Found a Match for "+ RaceDriverBKP[x].getDriverN());
-    
                         RaceDriver[y].getDriverS().setRP((RaceDriverBKP[x].getFinishP()));
-                        
-                        //System.out.print("\n Updated Stats for "+ RaceDriverBKP[x].getDriverN());
     
                         for (int z = 0; z < RaceF1.length; z++) {
                             if (RaceDriver[y].getDRD(z).getRaceName().equals("NA")) {
                                 RaceDriver[y].setDRD(z, new DRData(RaceName, RaceDate, RaceDriverBKP[x].getFinishP())); //seter + constructor
-                                //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
                                 break;
                             }
                         }
                     }
                 }
             }
-        }else {
+        }else {         // this option is for normal Randomizer code
             for (int x = 0; x < DriverCount; x++) {
                 for (int y = 0; y < RaceDriver.length; y++) {
                     if (RaceDriverBKP[x].getDriverN().equals(RaceDriver[y].getDriverN())){
-                        //System.out.print("\n Found a Match for "+ RaceDriverBKP[x].getDriverN());
-    
                         RaceDriver[y].getDriverS().setRP((RaceDriverBKP[x].getStartP()));
-                        
-                        //System.out.print("\n Updated Stats for "+ RaceDriverBKP[x].getDriverN());
     
                         for (int z = 0; z < RaceF1.length; z++) {
                             if (RaceDriver[y].getDRD(z).getRaceName().equals("NA")) {
                                 RaceDriver[y].setDRD(z, new DRData(RaceName, RaceDate, RaceDriverBKP[x].getStartP())); //seter + constructor
-                                //System.out.print("\n Updated driver Race data for "+ RaceDriverBKP[x].getDriverN());
                                 break;
                             }
                         }
