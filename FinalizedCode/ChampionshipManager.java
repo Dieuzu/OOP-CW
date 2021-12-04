@@ -3,22 +3,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;  
-//import javax.swing.table.*;
-//import javax.swing.event.*;
-// import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ChampionshipManager extends Formula1ChampionshipManager{  
 
-    String GDData[][] = Formula1ChampionshipManager.GrabDriverData();
-    String GRData[][] = Formula1ChampionshipManager.GrabRaceData();
-    public static Driver[] RaceDriverBKP = new Driver[DriverCount];
+    String GDData[][] = Formula1ChampionshipManager.GrabDriverData(); // 2D Array Created for storing driver details to be displayed on GUI Table
+    String GRData[][] = Formula1ChampionshipManager.GrabRaceData();   // 2D Array Created for storing Race details to be displayed on GUI Table
+
+    public static Driver[] RaceDriverBKP = new Driver[DriverCount]; // Backuparray of all registerd drivers to manupilate the stats without affecting original Array
 
     public static ArrayList<Integer> StartPositionTracker = new ArrayList<Integer>(); // keeps track of Starting position for each driver from race
     public static ArrayList<Integer> FinalPositionTracker = new ArrayList<Integer>(); // keeps track of Finish position for each driver from race
-    //public int Racenum = 1;
-    public String driverNameR = "Driver"; 
 
-    public static String RaceStatMSG = ""; 
+    public String driverNameR = "Driver"; //Place holder string to Display Driver Race details on GUI
+
+    public static String RaceStatMSG = "";  //Race Stats String for concatenation purposes to print final msg when button pressed
 
     // Create the main panel
     private JPanel mainPanel = new JPanel(new BorderLayout());
@@ -29,7 +27,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
             public void run() {
                 JFrame f = new JFrame("Championship Manager");
                 f.getContentPane().add(new ChampionshipManager(args).getComponent());
-                //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //Disabled Cause we dunt wanna close entire program wen gui is closed
+                //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //Disabled Cause we dunt wanna close entire program when gui is closed
                 f.setSize(1500,522);
                 f.setLocationRelativeTo(null);
                 f.setVisible(true);
@@ -53,16 +51,16 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
         //Add buttons
         JButton randRace1button = new JButton("Generate a Random Race");
-        JButton randRace2button = new JButton("Generate a Random Race with %");
-        JButton lookUpbutton = new JButton("Lookup All races of Driver");
+        JButton randRace2button = new JButton("Generate a Random Race with Random Start Position and Win %");
+        JButton lookUpbutton = new JButton("Lookup All Races of Driver");
         JButton clearbutton = new JButton("Clear GUI Console");
 
-        //Text Field that doubles as inpput section + consol log
+        //Text Field that doubles as input section + consol log!
         JTextField TextFieldConsole = new JTextField();  
         TextFieldConsole.setColumns(134);
         TextFieldConsole.setText("\t\t\t\t\t    Welcome to the Championship Manager GUI!   |   This Textfield Acts as an 'Input Field' & a 'Console Log'!"); 
 
-        // unused Text area code 
+        // Text area code 
         JTextArea TxtArea=new JTextArea();
         JScrollPane scroll=new JScrollPane(TxtArea);
         TxtArea.setLineWrap(true);
@@ -71,7 +69,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         //Lables
         JLabel RaceDetesLF =new JLabel(driverNameR+ " Race Data :                      ");    
         RaceDetesLF.setBounds(50,100, 250,20);   
-        //JPanel lablePanel = new JPanel(); 
         RaceDetesLF.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
@@ -87,11 +84,9 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
         //Adding Text Area + the 2 Tables to the topPanel
         topPanel.add(new JScrollPane(topInnerPanel), BorderLayout.WEST );
-
         topPanel.add(new JScrollPane(StatTable), BorderLayout.CENTER);
         topPanel.add(new JScrollPane(RaceTable),BorderLayout.EAST);
         
-
         //Adding Textfield to the midPanel
         midPanel.add(TextFieldConsole);
 
@@ -109,7 +104,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         //GUI stuff ENDS here ==================================================================================================================================   
 
         // Button Presses Actions!
-        //action wen [randRace1button] button is clicked.
+        //action when [randRace1button] button is clicked.
         randRace1button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,9 +117,9 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
                     RandomStartP(0,TextFieldConsole);
-                    RaceStatsReAsigner(Racenum, 0); // Sends and updates the Data of each racer back to the main Array of Drivers 
-                    ResetRaceSPTandFPT(); // resets the Tempt data created for the race
-                    RefreshRDTableArray(GDData, GRData);
+                    RaceStatsReAsigner(Racenum, 0);       // Sends and updates the Data of each racer back to the main Array of Drivers 
+                    ResetRaceSPTandFPT();                 // Resets the Temporary data created for the race
+                    RefreshRDTableArray(GDData, GRData);  // Re-gets all driver and race details to redraw tables
                     Racenum++;
 
                 }
@@ -145,10 +140,10 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 }else if (DriverCount == 0 || DriverCount == 1 ) {
                     JOptionPane.showMessageDialog(null, "Unable to Create a New Race...\n\nplease Register at least 2 Drivers!" );
                 }else {
-                    RandomStartP(1, TextFieldConsole);  // Runs a function that Gives Start Postions Randomly for all registerd Drivers
-                    FinishPositions(TextFieldConsole);  // Runs a function that Generates Finish Positions for all Drivers based on the win % created from random Start Postions
-                    RaceStatsReAsigner(Racenum, 1); // Sends and updates the Data of each racer back to the main Array of Drivers 
-                    ResetRaceSPTandFPT(); // resets the Tempt data created for the race
+                    RandomStartP(1, TextFieldConsole);    // Step 1. Runs a method that Gives Start Postions Randomly for all registerd Drivers
+                    FinishPositions(TextFieldConsole);    // Step 2. Runs a method that Generates Finish Positions for all Drivers based on the win % created from random Start Postions
+                    RaceStatsReAsigner(Racenum, 1);       // Step 3. Sends and updates the Data of each racer back to the main Array of Drivers 
+                    ResetRaceSPTandFPT();                 // Resets the Temporary data created for the race
                     RefreshRDTableArray(GDData, GRData);
                     Racenum++;
                 }
@@ -200,20 +195,19 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     }
 
-    //Get the main panel
+    // Get the main panel
     public JComponent getComponent() {
         return mainPanel;
     }
 
-    // Part 5 methods below =======================
-    //Step 1.0
+//============================================================================ Methods For Race Generation =============================================================================
+    // Step 1.0. Generates a Random Postion (Start)
     public static void RandomStartP(int Option, JTextField TextFieldConsole) {
         RaceStatMSG = ""; 
-        //System.out.print("Generating Starting postions For the Race : \n");
+
         for (int x = 0; x < RaceDriver.length; x++){ //Adding Registerd drivers from the main Driver array as a backup to ensure no modifications to RaceDriver till the end of the race
             if (!RaceDriver[x].getDriverN().equals("E")) {
                 RaceDriverBKP[x] = RaceDriver[x];
-                //System.out.print("\n Registerd : "+RaceDriver[x].getDriverN());
             }
         }
 
@@ -230,15 +224,14 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                         double WinPercent = WinPercent(randomStartPosition);
                         RaceDriverBKP[x].setWinPercent(WinPercent);
                     }
-                    //RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");
                     Race = false;
                 }
             } 
         }
         
-        if (Option != 1) {
+        if (Option != 1) { // this is only for the normal Randomizer Code (no start position/ win%) only generates a finish postion!
             //bubble sort to arrange Drivers in order of race postions (using a temp Array of classes thats a clone of RaceDriver)
-            for(int x = 0; x < DriverCount; x++) { //final printing code
+            for(int x = 0; x < DriverCount; x++) { //final sorting code for printing
                 int winner = 1;
 
                 for (int i = 0; i < DriverCount-1; i++) {              //Bubble sort so order will be like : 1st , 2nd , 3rd,......last place
@@ -256,9 +249,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 if (RaceDriverBKP[x].getStartP() == winner){  
                     TextFieldConsole.setText(RaceDriverBKP[x].getDriverN() + "\nWon the Race!");
                     RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Won the Race!\n\n");
-                    //System.out.print("\n"+RaceDriverBKP[x].getDriverN() + " Won the Race with a Sucess rate of "+ RaceDriverBKP[x].getWinPercent()*100 +"% !\n"); // console log msg
                 }else {
-                    //System.out.print(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getFinishP() +"\n");  // UNCOMMENT FOR DEMONSTRATION PURPOSES
                     RaceStatMSG = RaceStatMSG.concat(RaceDriverBKP[x].getDriverN() + " Finished the Race in Postion : " + RaceDriverBKP[x].getStartP() +"\n");
                 } 
             }
@@ -266,7 +257,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     }
 
-    //Step 1.5
+    // Step 1.1. We are Calculating Driver chance to win race using Step 1.0
     public static double WinPercent(int x){
         double Percent = 0;
         if (x == 1){ 
@@ -288,13 +279,12 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         return Percent;
     }
 
-    //Step 2.0
+    // Step 2.0. Based on Step 1 and 1.1 We start this step
     public static void FinishPositions(JTextField TextFieldConsole) {
 
-        RaceStatMSG = ""; 
+        RaceStatMSG = ""; // Resets the Concatenation Msg to empty!
     
-        //System.out.print("\n\nGenerating Final postions For the Race : \n");
-        RaceWinnerDecider();
+        RaceWinnerDecider(); // Runs Step 2.1 to decide Who wins the race based on their win % from step 1.1
 
         //bubble sort to arrange Drivers in order of race postions (using a temp Array of classes thats a clone of RaceDriver)
         for(int x = 0; x < DriverCount; x++) { //final printing code
@@ -323,7 +313,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
     }
 
-    //Step 3.0
+    // Step 2.1. Uses Step 1.1 to decide the Final Postions of Each driver in the race 
     public static void RaceWinnerDecider(){
         int DriverPartiCount = 0; // counts all the drivers that particpated in the race to ensure Somone always wins in first place with a win %
 
@@ -355,16 +345,15 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
     }
 
-    //Step 3.4
+    // Step 2.1.1. this Resets the Current race in the event a driver with 0% chance beats the odds!
     public static void ResetTheCurrentRace(){
         for (int x = 0; x < DriverCount; x++) {
             RaceDriverBKP[x].setFinishP(0);
         }
         FinalPositionTracker = new ArrayList<Integer>(); // Resets the Array List of Final postion Tracker for all drivers from current  race
-        //System.out.print("\n <DEBUG LOG> : Driver with 0% chance to get 1st Place Won the Race! A Race RESET was done \n"); // UNCOMMENT ME if need to Debug
     }
 
-    //Step 3.7
+    // Step 2.1.2. This generates Finish postions for Drivers who DO NOT get in 1st place 
     public static void FinishPositionGenerator(int DriverIndex){
         Random raceENDposition = new Random();
         boolean Race = true;
@@ -380,12 +369,13 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }    
     }
 
-    //Step 4.0
+    // Method to Reset all Temp Data Created during a Race creation!
     public static void ResetRaceSPTandFPT(){
         StartPositionTracker = new ArrayList<Integer>(); // Resets the Array List of Start postion Tracker for all drivers from LAST race
         FinalPositionTracker = new ArrayList<Integer>(); // Resets the Array List of Final postion Tracker for all drivers from LAST race
     }
 
+    // Method to Store all Generated race data back into the main RaceDriver Array in Formula1ChampionshipManager.java
     public static void RaceStatsReAsigner(int Racenum, int Option){
         RaceName = "Race " + String.valueOf(Racenum); 
 
@@ -428,7 +418,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
     }
 
-    // refresh table
+    // Method to Refresh Both tables on GUI
     public static void RefreshRDTableArray(String GDData[][], String GRData[][]){
         for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
             if (!RaceDriver[x].getDriverN().equals("E")) {
@@ -481,7 +471,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         }
     }
 
-    //
+    // Method to Check All Data and Determine the Champion of the entire Season!
     public static void ChampDecider(){
         Driver[] CloneRaceDriver = new Driver[RaceDriver.length]; // cloning Driver array as a backup to ensure no sorted change is permanant
         for (int x = 0; x < RaceDriver.length; x++) {
