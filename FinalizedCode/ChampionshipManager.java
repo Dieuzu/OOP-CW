@@ -73,14 +73,14 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
 
         //3 Sub panels for main pannel!
-        JPanel topPanel = new JPanel(new BorderLayout());             //this panel holds the $Text Area$ + the 2 Tables [ [   ] |      |    ]
+        JPanel topPanel = new JPanel(new BorderLayout());             //this panel holds the $Text Area$ + the 2 Tables [  ---  |      |    ]
         JPanel topInnerPanel = new JPanel(new BorderLayout());        // this is an inner panel for topPanel            [ [   ] |      |    ]
         JPanel midPanel = new JPanel();                               //this panel holds the Textfield                  [   ==============  ]
-        JPanel bottomPanel = new JPanel();                            //this panel holds the buttons                    [   ===  ===  ===   ]
+        JPanel bottomPanel = new JPanel();                            //this panel holds the buttons                    [   ==  ==  == ==   ]
 
         //Pannel Sorting! :
-        topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );           //[      ]
-        topInnerPanel.add(TxtArea,BorderLayout.CENTER );              //[      ]
+        topInnerPanel.add(RaceDetesLF,BorderLayout.NORTH );           //  ---
+        topInnerPanel.add(TxtArea,BorderLayout.CENTER );              //[     ]
 
         //Adding Text Area + the 2 Tables to the topPanel
         topPanel.add(new JScrollPane(topInnerPanel), BorderLayout.WEST );
@@ -157,7 +157,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
         //action wen [lookUpbutton] button is clicked.
         lookUpbutton.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  
-                //TextFieldConsole.setText("[lookUpbutton] Has Been Pressed");
                 driverNameR = TextFieldConsole.getText();
                 String RaceStats = "";
                 // Step 1: check for the name of the driver
@@ -170,9 +169,6 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                                 String RN = RaceDriver[i].getDRD(j).getRaceName();
                                 String RT = RaceDriver[i].getDRD(j).getRaceDate();
                                 String RP = String.valueOf(RaceDriver[i].getDRD(j).getRacepostion());
-    
-                                //Concatdata = RN +" ("+ RT +")\nPosition : " + RP + "\n\n";
-                                //RaceStats = RaceStats.concat(Concatdata);
                                 RaceStats = RaceStats.concat(RN +" - ("+ RT +") :\nPosition : " + RP + "\n\n");
                             }
                         }
@@ -186,6 +182,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                 TxtArea.setText(RaceStats);
             }  
         });
+
         //action wen [randRace2button] button is clicked.
         clearbutton.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){  

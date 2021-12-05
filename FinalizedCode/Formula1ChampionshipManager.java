@@ -90,7 +90,7 @@ public class Formula1ChampionshipManager{
 
             } else if (userInput.equals("0")) {
                 SaveData();
-                System.out.print("\nThank you For Trying the Application!\n");
+                System.out.print("\n\nThank you For Trying the Application!\n\n");
                 MenuCheck = false;
             } else if (userInput.equalsIgnoreCase("Reset")) {
                 BDDataWipe(input);
@@ -314,7 +314,7 @@ public class Formula1ChampionshipManager{
             int Sindex = Integer.parseInt(input.nextLine());
 
             if (Sindex >= RaceDriver.length || Sindex < 0) {
-                System.out.print("\nThe entered S.No is Out of Range!: \n");
+                System.out.print("\nThe entered S.No is Out of Range! \n");
                 continue;
             }else {
                 IndividualDriverStats(Sindex); // pulls the stats of Indexed driver
@@ -437,8 +437,14 @@ public class Formula1ChampionshipManager{
                 System.out.print("\nDo you wish to Add a NEW Driver to this Race ?(yes/y/no/n) : ");
                 String AddUI = input.nextLine(); 
                 if (AddUI.equals("yes") || AddUI.equals("y")){
-                    AddDriver(input, RaceName, RaceDate);
-                    raceParticipant ++;
+                    if (DriverCount == MaxNumDrivers){
+                        System.out.print("Sorry the F1 Championship Roster is Full and No new Drivers Can be Added!\n");
+                        RaceNEWDriverAdd = false;
+                    }else{
+                        AddDriver(input, RaceName, RaceDate);
+                        raceParticipant ++;
+                    }
+
                 }else if (AddUI.equals("no") || AddUI.equals("n")){
                     RaceNEWDriverAdd = false;
                 }else{
@@ -693,7 +699,7 @@ public class Formula1ChampionshipManager{
             System.out.print("\n``````````````````````````````");
             System.out.print("\nSucessfully Reset All Drivers Race Data!");
         }else{
-            System.out.print("\nPls Enter a Valid Answer!");
+            System.out.print("\nInput Didnt Match, Leaving Secret Developer ResetMethod");
         }
     }
 
