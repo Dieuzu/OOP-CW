@@ -21,7 +21,6 @@ public class Formula1ChampionshipManager{
     public static int DriverCount = 0;
     public static int RacesCount =0;
 
-    
     public static int Racenum = 1; // Variable to Create auto date and Race number 
     public static String RaceName; 
     public static String RaceDate;

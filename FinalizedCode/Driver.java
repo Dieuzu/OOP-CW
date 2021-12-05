@@ -41,7 +41,6 @@ public class Driver {
         return driverRaceData[x];
     }
 
-
     // Setters 
     public void setDriverN(String name) {
         driverName = name;
@@ -97,6 +96,5 @@ public class Driver {
     public Driver(Formula1Driver Stats){ // Constructor Overloading
         driverStats = Stats;
     } 
-
 
 }
