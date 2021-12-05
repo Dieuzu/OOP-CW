@@ -1,4 +1,4 @@
-public class DRData { //DRData stands for "Driver Race Data"
+public class DRData { //DRData stands for "Driver Race Data" this class basically holds individual race data for the driver for a perticular race
     private String raceName;
     private String raceDate;
     private int racepostion;

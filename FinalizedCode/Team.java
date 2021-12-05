@@ -1,6 +1,6 @@
 public class Team {
 
-    private String teamName; // Holds the Team name of a Driver from Driver class
+    private String teamName; // Holds the Team Name of a Driver from Driver class
 
     //Getter
     public String getTeamN() {

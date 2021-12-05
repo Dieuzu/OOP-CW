@@ -10,10 +10,10 @@ public class Driver {
     private int finishPosition;
     private double winPercentPerDriver;
 
-    //An array holding data of all races and dates and positions for driver Class
+    // An array holding data of all races and dates and positions for driver Class
     private DRData driverRaceData[] = new DRData[Formula1ChampionshipManager.MaxNumRaces];
 
-    //Getters 
+    // Getters 
     public String getDriverN() {
         return driverName;
     }
@@ -42,7 +42,7 @@ public class Driver {
     }
 
 
-    //Setters 
+    // Setters 
     public void setDriverN(String name) {
         driverName = name;
     }
@@ -79,7 +79,7 @@ public class Driver {
         return;
     }
 
-    //Constructors 
+    // Constructors 
     public Driver(String Name, String Location, Team Team, Formula1Driver Stats){
         driverName = Name ;
         driverLocation= Location ;
@@ -87,14 +87,14 @@ public class Driver {
         driverStats = Stats;
     } 
 
-    public Driver(String Name, String Location, Team Team){ // Overloading
+    public Driver(String Name, String Location, Team Team){ // Constructor Overloading
         driverName = Name ;
         driverLocation= Location ;
         driverTeam= Team ;
 
     } 
 
-    public Driver(Formula1Driver Stats){ // Overloading
+    public Driver(Formula1Driver Stats){ // Constructor Overloading
         driverStats = Stats;
     } 
 

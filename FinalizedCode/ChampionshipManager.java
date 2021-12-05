@@ -315,7 +315,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
 
     // Step 2.1. Uses Step 1.1 to decide the Final Postions of Each driver in the race 
     public static void RaceWinnerDecider(){
-        int DriverPartiCount = 0; // counts all the drivers that particpated in the race to ensure Somone always wins in first place with a win %
+        int DriverPartiCount = 0; // counts all the drivers that particpated in the race and got a postion to ensure there will be a first place winer with a win % > 0
 
         for (int x = 0; x < DriverCount; x++) {  // Stores all driver details line by line
             double Percent2Win =  RaceDriverBKP[x].getWinPercent();
@@ -327,7 +327,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                     //This condition ensures the Match will always have a winner with a winning % and cannot win race with 0% success rate.
                     // so the entire race stats will be reset till perfect random race is generated without a 0% win rate driver winning the entire race
                     ResetTheCurrentRace(); 
-                    RaceWinnerDecider(); // hahahaha back to more recursions 
+                    RaceWinnerDecider(); 
                     break;
                 } else if((ChanceOfFIRST == true || DriverPartiCount == DriverCount-1) && RaceDriverBKP[x].getWinPercent() !=0.0){
                     FinalPositionTracker.add(1);
@@ -338,7 +338,7 @@ public class ChampionshipManager extends Formula1ChampionshipManager{
                     DriverPartiCount++;
                 }
 
-            }else {
+            }else { // if somone has already got 1st place remaining postions will be randomly given out!
                 FinishPositionGenerator(x);  
                 DriverPartiCount++;
             }

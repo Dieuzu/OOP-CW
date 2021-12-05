@@ -578,7 +578,7 @@ public class Formula1ChampionshipManager{
         }
     }
 
-    //======================================================= EXTRA FUNCTIONS FOR SIMPLICITY =======================================================
+//======================================================= EXTRA FUNCTIONS FOR SIMPLICITY =======================================================
 
     // X1. Check all Driver Functions!
     public static void ShowAllDriver() { // this method simply prints the names and teams of all registerd Drivers wenever called

@@ -1,7 +1,7 @@
 public class Races {
 
-    private String raceName; // Holds Race name for Each completed Race
-    private String raceDate; // Holds race Date for each Completed Race
+    private String raceName;  // Holds Race name for Each completed Race
+    private String raceDate;  // Holds race Date for each Completed Race
 
     //Getter
     public String getMapN() {

@@ -1,10 +1,11 @@
 
 public class Formula1Driver {
 
-    private int racePosition = 0;
-    private int numberOfPoints = 0;
-    private int numberOfRaces = 0;
+    private int racePosition = 0;   // Variable to hold Race postion of Last Race
+    private int numberOfPoints = 0; // Variable to hold Total number of points earned
+    private int numberOfRaces = 0;  // Variable to hold Total number of Races Participated
 
+    // Variables to Keep track of 1st, 2nd and 3rd postions attained during a race!
     private int numberOfFirstPositions = 0;
     private int numberOfSecondPositions = 0;
     private int numberOfThirdPositions = 0;
@@ -30,6 +31,23 @@ public class Formula1Driver {
     }
 
     //Setters
+    public void setNumPoint(int p) {
+        numberOfPoints += p;
+    }
+    public void setNumRaces(int r) {
+        numberOfRaces += r;
+    }
+
+    public void setFP(int x) {
+        numberOfFirstPositions += x;
+    }
+    public void setSP(int y) {
+        numberOfSecondPositions += y;
+    }
+    public void setTP(int z) {
+        numberOfThirdPositions += z;
+    }
+
     public void setRP(int s) { // Member function for calculating points and asigning records of Special finish postions of a race 
         racePosition = s;
         if (racePosition == 1){ // 1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
@@ -73,23 +91,6 @@ public class Formula1Driver {
             numberOfRaces += 1;
         }
     }
-
-    public void setNumPoint(int p) {
-        numberOfPoints += p;
-    }
-    public void setNumRaces(int r) {
-        numberOfRaces += r;
-    }
-
-    public void setFP(int x) {
-        numberOfFirstPositions += x;
-    }
-    public void setSP(int y) {
-        numberOfSecondPositions += y;
-    }
-    public void setTP(int z) {
-        numberOfThirdPositions += z;
-    }
     
     // constructors
     public Formula1Driver(int NR, int NP, int NFP, int NSP, int NTP){
@@ -100,7 +101,7 @@ public class Formula1Driver {
         numberOfThirdPositions = NTP;
     }
 
-    public Formula1Driver(int position){ // 1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
+    public Formula1Driver(int position){ //constructor Overloading  X  1:25 2:18 3:15 4:12 5:10 6:8 7:6 8:4 9:2 10:1
         racePosition = position;
         if (racePosition == 1){
             numberOfFirstPositions +=1;
